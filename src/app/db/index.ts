@@ -1,13 +1,5 @@
-
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-
-const connectionString = process.env.DATABASE_URL;
-
-if (!connectionString) {
-  throw new Error("DATABASE_URL no está definida");
-}
-
-const sql = neon(connectionString);
-
-export const db = drizzle({ client: sql });
+/**
+ * @deprecated Importa la conexión desde "@/db".
+ * Este archivo se conserva temporalmente para evitar romper imports existentes.
+ */
+export { db } from "@/db";
