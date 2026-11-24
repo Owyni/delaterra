@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <radialGradient id="onionBody" cx="38%" cy="35%" r="68%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#F1EFE6"/>
+      <stop offset="100%" stop-color="#D9D5C5"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#F3F2EB"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="116" ry="14" fill="#5F6354" opacity="0.12"/>
+  <!-- Back onion -->
+  <path d="M226 78C226 92 268 106 268 144C268 178 242 202 214 202C186 202 160 178 160 144C160 106 202 92 202 78Z" fill="url(#onionBody)" stroke="#CFCBB9" stroke-width="2"/>
+  <path d="M214 78V54M208 78L200 58M220 78L228 58" stroke="#7A9F52" stroke-width="4" stroke-linecap="round"/>
+  <!-- Main onion -->
+  <path d="M168 92C168 108 216 124 216 168C216 206 186 232 152 232C118 232 88 206 88 168C88 124 136 108 136 92Z" fill="url(#onionBody)" stroke="#CFCBB9" stroke-width="2.5"/>
+  <path d="M152 108C128 134 122 188 144 228M152 108C176 134 182 188 160 228" stroke="#DFDCD0" stroke-width="2"/>
+  <path d="M152 92V62M145 92L134 68M159 92L170 68" stroke="#6B9446" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M144 232L140 240M152 232V242M160 232L164 240" stroke="#B3A588" stroke-width="2" stroke-linecap="round"/>
+  <!-- Halved onion rings -->
+  <g transform="translate(210 148)">
+    <circle cx="48" cy="48" r="44" fill="#FFFFFF" stroke="#D3CFC0" stroke-width="2.5"/>
+    <circle cx="48" cy="48" r="35" fill="#F6F5EE" stroke="#E0DDD0" stroke-width="2"/>
+    <circle cx="48" cy="48" r="24" fill="#FFFFFF" stroke="#E0DDD0" stroke-width="2"/>
+    <circle cx="48" cy="48" r="13" fill="#EEF3E0" stroke="#D4DEC2" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <radialGradient id="orangeBody" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FFBE55"/>
+      <stop offset="55%" stop-color="#F28520"/>
+      <stop offset="100%" stop-color="#CE5E12"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#FDF1DF"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.7"/>
+  <ellipse cx="200" cy="244" rx="112" ry="14" fill="#A65E1E" opacity="0.12"/>
+  <!-- Citrus leaves -->
+  <path d="M158 92C140 60 162 38 190 50C188 76 174 92 158 92Z" fill="#467A39"/>
+  <path d="M188 90C208 62 238 66 244 88C224 102 200 100 188 90Z" fill="#63984B"/>
+  <!-- Whole orange -->
+  <circle cx="164" cy="154" r="70" fill="url(#orangeBody)"/>
+  <circle cx="140" cy="126" r="16" fill="#FFE09C" opacity="0.45"/>
+  <circle cx="182" cy="146" r="2" fill="#BD5512" opacity="0.4"/>
+  <circle cx="196" cy="166" r="2" fill="#BD5512" opacity="0.4"/>
+  <circle cx="148" cy="178" r="2" fill="#BD5512" opacity="0.4"/>
+  <!-- Orange slice -->
+  <g transform="translate(200 124)">
+    <circle cx="56" cy="56" r="56" fill="#F28520"/>
+    <circle cx="56" cy="56" r="49" fill="#FFF7DE"/>
+    <circle cx="56" cy="56" r="44" fill="#FFA238"/>
+    <path d="M56 12V100M12 56H100M25 25L87 87M87 25L25 87" stroke="#FFF7DE" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="56" cy="56" r="6" fill="#FFF7DE"/>
+  </g>
+</svg>

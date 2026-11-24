@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" fill="none">
+  <rect width="320" height="220" rx="24" fill="#EDF2E3"/>
+  <circle cx="160" cy="112" r="78" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="160" cy="176" rx="84" ry="12" fill="#244D36" opacity="0.1"/>
+  <!-- Lettuce -->
+  <circle cx="118" cy="126" r="42" fill="#7EA858"/>
+  <path d="M90 124C98 96 132 94 148 114C156 128 148 156 120 158C96 158 84 140 90 124Z" fill="#9EC674"/>
+  <!-- Carrot -->
+  <g transform="translate(174 72) rotate(22)">
+    <path d="M12 24L24 106C25 112 16 114 14 106L2 26C1 16 11 15 12 24Z" fill="#EB7E2B"/>
+    <path d="M8 20C3 4 12 -2 17 8C20 -2 28 3 23 18" stroke="#457539" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- White Onion -->
+  <path d="M214 96C214 106 238 114 238 136C238 156 224 168 206 168C188 168 174 156 174 136C174 114 198 106 198 96Z" fill="#F8F6EE" stroke="#D7D5C7" stroke-width="2"/>
+  <path d="M206 96V74M200 96L194 78M212 96L218 78" stroke="#6B9149" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

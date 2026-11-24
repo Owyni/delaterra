@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <rect width="320" height="320" rx="28" fill="#E8F0E1"/>
+  <!-- Hills -->
+  <path d="M0 240C72 204 148 214 220 232C264 242 296 232 320 220V320H0V240Z" fill="#BBD0A6"/>
+  <path d="M0 262C96 244 210 248 320 268V320H0V262Z" fill="#71864F"/>
+  <!-- Shoulders & shirt -->
+  <path d="M74 320C80 248 118 224 160 224C202 224 240 248 246 320H74Z" fill="#244D36"/>
+  <path d="M132 226L160 256L188 226" fill="#F6F5ED"/>
+  <!-- Neck & head -->
+  <rect x="142" y="190" width="36" height="38" rx="14" fill="#C98A63"/>
+  <circle cx="160" cy="156" r="46" fill="#D69972"/>
+  <!-- Eyes & smile -->
+  <circle cx="144" cy="154" r="4" fill="#2A241E"/>
+  <circle cx="176" cy="154" r="4" fill="#2A241E"/>
+  <path d="M148 174C154 180 166 180 172 174" stroke="#6B3D26" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Straw hat -->
+  <path d="M114 128C116 92 136 74 160 74C184 74 204 92 206 128H114Z" fill="#E5C88B"/>
+  <rect x="114" y="114" width="92" height="12" fill="#244D36"/>
+  <ellipse cx="160" cy="128" rx="74" ry="14" fill="#DFBE7C"/>
+  <!-- Avocado badge -->
+  <circle cx="252" cy="76" r="30" fill="#FFFFFF" stroke="#DCE6D2" stroke-width="2"/>
+  <path d="M252 56C260 56 268 70 268 82C268 92 260 98 252 98C244 98 236 92 236 82C236 70 244 56 252 56Z" fill="#325934"/>
+  <circle cx="252" cy="83" r="7" fill="#7D492C"/>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <radialGradient id="tomRed" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#FF785A"/>
+      <stop offset="60%" stop-color="#E0402C"/>
+      <stop offset="100%" stop-color="#A82419"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#FCEAE5"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="115" ry="14" fill="#8C2B1E" opacity="0.12"/>
+  <!-- Vine -->
+  <path d="M126 78C164 62 232 64 274 86" stroke="#457539" stroke-width="6" stroke-linecap="round"/>
+  <!-- Back tomato -->
+  <ellipse cx="242" cy="142" rx="54" ry="58" fill="url(#tomRed)"/>
+  <path d="M242 84L232 98L244 92L254 98L246 84Z" fill="#3B6D34"/>
+  <!-- Main tomato -->
+  <ellipse cx="158" cy="154" rx="64" ry="68" fill="url(#tomRed)"/>
+  <ellipse cx="134" cy="126" rx="14" ry="9" transform="rotate(-28 134 126)" fill="#FFB3A2" opacity="0.55"/>
+  <path d="M158 86L144 104L158 96L174 104L164 86L176 80L158 83L142 78Z" fill="#34632E"/>
+  <!-- Fresh tomato slice -->
+  <g transform="translate(206 144)">
+    <circle cx="48" cy="48" r="44" fill="#DC3B28"/>
+    <circle cx="48" cy="48" r="37" fill="#F66754"/>
+    <ellipse cx="34" cy="36" rx="9" ry="12" transform="rotate(-35 34 36)" fill="#C82F1E"/>
+    <ellipse cx="62" cy="36" rx="9" ry="12" transform="rotate(35 62 36)" fill="#C82F1E"/>
+    <ellipse cx="34" cy="60" rx="9" ry="12" transform="rotate(35 34 60)" fill="#C82F1E"/>
+    <ellipse cx="62" cy="60" rx="9" ry="12" transform="rotate(-35 62 60)" fill="#C82F1E"/>
+    <circle cx="32" cy="34" r="1.8" fill="#FFE6A3"/>
+    <circle cx="64" cy="34" r="1.8" fill="#FFE6A3"/>
+    <circle cx="32" cy="62" r="1.8" fill="#FFE6A3"/>
+    <circle cx="64" cy="62" r="1.8" fill="#FFE6A3"/>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <rect width="320" height="320" rx="28" fill="#EFECE2"/>
+  <path d="M0 242C90 218 196 220 320 244V320H0V242Z" fill="#D5DFC8"/>
+  <path d="M0 270C114 252 216 254 320 272V320H0V270Z" fill="#6F894D"/>
+  <!-- Hair -->
+  <circle cx="160" cy="148" r="54" fill="#3B2922"/>
+  <!-- Sweater -->
+  <path d="M76 320C84 248 118 224 160 224C202 224 236 248 244 320H76Z" fill="#5C7A42"/>
+  <path d="M132 224C144 240 176 240 188 224" stroke="#F6F5ED" stroke-width="8" stroke-linecap="round"/>
+  <!-- Head -->
+  <rect x="142" y="190" width="36" height="36" rx="14" fill="#D89E7B"/>
+  <circle cx="160" cy="154" r="44" fill="#E3AA88"/>
+  <path d="M118 144C126 114 194 114 202 144C184 128 136 128 118 144Z" fill="#3B2922"/>
+  <circle cx="145" cy="154" r="4" fill="#2A241E"/>
+  <circle cx="175" cy="154" r="4" fill="#2A241E"/>
+  <path d="M148 172C154 178 166 178 172 172" stroke="#75412E" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Carrot/tuber badge -->
+  <circle cx="252" cy="76" r="30" fill="#FFFFFF" stroke="#DCE6D2" stroke-width="2"/>
+  <path d="M250 64L258 96C258 99 254 99 253 96L242 66C241 62 249 60 250 64Z" fill="#EB7E2B"/>
+  <path d="M244 62C242 54 248 52 250 58" stroke="#457A39" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

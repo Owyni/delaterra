@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="hassSkin" x1="0.2" y1="0.1" x2="0.8" y2="0.9">
+      <stop offset="0%" stop-color="#486B34"/>
+      <stop offset="60%" stop-color="#2B4828"/>
+      <stop offset="100%" stop-color="#1B301B"/>
+    </linearGradient>
+    <linearGradient id="hassFlesh" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D9EA8C"/>
+      <stop offset="100%" stop-color="#A6C85A"/>
+    </linearGradient>
+    <radialGradient id="hassPit" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#B5754A"/>
+      <stop offset="100%" stop-color="#6F3E21"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#EBF2E4"/>
+  <circle cx="200" cy="148" r="112" fill="#FFFFFF" opacity="0.65"/>
+  <ellipse cx="200" cy="246" rx="115" ry="15" fill="#244D36" opacity="0.12"/>
+  <!-- Leaf -->
+  <path d="M126 118C94 94 98 58 134 58C158 72 154 108 126 118Z" fill="#638C45"/>
+  <path d="M114 70C122 88 126 102 126 116" stroke="#DCE6D2" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Whole Hass avocado -->
+  <g transform="translate(114 64) rotate(-8)">
+    <path d="M54 8C78 8 100 54 100 98C100 134 78 158 54 158C30 158 8 134 8 98C8 54 30 8 54 8Z" fill="url(#hassSkin)"/>
+    <circle cx="38" cy="78" r="3" fill="#64884B" opacity="0.5"/>
+    <circle cx="64" cy="64" r="2.5" fill="#64884B" opacity="0.45"/>
+    <circle cx="72" cy="108" r="3.5" fill="#172917" opacity="0.4"/>
+    <ellipse cx="36" cy="72" rx="10" ry="22" transform="rotate(-8 36 72)" fill="#7DA25F" opacity="0.28"/>
+  </g>
+  <!-- Halved avocado -->
+  <g transform="translate(198 86) rotate(11)">
+    <path d="M48 6C70 6 90 48 90 88C90 120 70 142 48 142C26 142 6 120 6 88C6 48 26 6 48 6Z" fill="#2D4B2B"/>
+    <path d="M48 14C67 14 82 52 82 88C82 115 67 134 48 134C29 134 14 115 14 88C14 52 29 14 48 14Z" fill="url(#hassFlesh)"/>
+    <path d="M48 24C62 24 72 56 72 86C72 108 62 122 48 122C34 122 24 108 24 86C24 56 34 24 48 24Z" fill="#E6F2AC" opacity="0.7"/>
+    <circle cx="48" cy="92" r="23" fill="url(#hassPit)"/>
+    <ellipse cx="41" cy="84" rx="6" ry="4" transform="rotate(-25 41 84)" fill="#D99B70" opacity="0.6"/>
+  </g>
+</svg>

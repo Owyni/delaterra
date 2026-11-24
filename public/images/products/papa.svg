@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <radialGradient id="potSkin" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#EBD09B"/>
+      <stop offset="65%" stop-color="#CCA66A"/>
+      <stop offset="100%" stop-color="#9E7944"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#F4EFE5"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="116" ry="14" fill="#7D5E32" opacity="0.12"/>
+  <!-- Back potato -->
+  <ellipse cx="236" cy="132" rx="64" ry="46" transform="rotate(14 236 132)" fill="url(#potSkin)"/>
+  <circle cx="222" cy="116" r="3" fill="#8C6735" opacity="0.5"/>
+  <circle cx="256" cy="136" r="3.5" fill="#8C6735" opacity="0.5"/>
+  <!-- Main potato -->
+  <ellipse cx="158" cy="166" rx="74" ry="52" transform="rotate(-10 158 166)" fill="url(#potSkin)"/>
+  <ellipse cx="136" cy="144" rx="22" ry="10" transform="rotate(-14 136 144)" fill="#F7E4BA" opacity="0.45"/>
+  <circle cx="178" cy="158" r="3" fill="#8C6735" opacity="0.5"/>
+  <circle cx="144" cy="186" r="3.5" fill="#8C6735" opacity="0.5"/>
+  <circle cx="196" cy="180" r="2.5" fill="#8C6735" opacity="0.5"/>
+  <!-- Cut potato half -->
+  <g transform="translate(198 158) rotate(-8)">
+    <ellipse cx="48" cy="36" rx="46" ry="34" fill="#B58D54"/>
+    <ellipse cx="48" cy="34" rx="41" ry="29" fill="#FAF0CD"/>
+  </g>
+</svg>

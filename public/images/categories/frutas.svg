@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" fill="none">
+  <rect width="320" height="220" rx="24" fill="#EAF1E3"/>
+  <circle cx="160" cy="112" r="78" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="160" cy="176" rx="84" ry="12" fill="#244D36" opacity="0.1"/>
+  <!-- Orange -->
+  <circle cx="118" cy="118" r="40" fill="#F28C28"/>
+  <circle cx="104" cy="102" r="9" fill="#FFCA7A" opacity="0.5"/>
+  <!-- Avocado -->
+  <path d="M168 56C188 56 206 90 206 122C206 148 188 166 168 166C148 166 130 148 130 122C130 90 148 56 168 56Z" fill="#2C5234"/>
+  <path d="M168 64C184 64 198 92 198 121C198 142 184 158 168 158C152 158 138 142 138 121C138 92 152 64 168 64Z" fill="#C7DF7C"/>
+  <circle cx="168" cy="126" r="17" fill="#7D492C"/>
+  <!-- Strawberry -->
+  <path d="M214 114C230 114 242 128 238 146C234 160 222 170 214 170C206 170 194 160 190 146C186 128 198 114 214 114Z" fill="#DF3D34"/>
+  <path d="M202 114L214 104L226 114L214 119Z" fill="#437639"/>
+  <circle cx="206" cy="134" r="1.8" fill="#FFE79C"/>
+  <circle cx="220" cy="136" r="1.8" fill="#FFE79C"/>
+  <circle cx="213" cy="150" r="1.8" fill="#FFE79C"/>
+  <!-- Leaf -->
+  <path d="M114 78C118 58 138 50 148 60C140 76 124 82 114 78Z" fill="#5A8B43"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <rect width="320" height="320" rx="28" fill="#F4EDE8"/>
+  <path d="M0 242C80 218 164 218 320 246V320H0V242Z" fill="#DCE6D2"/>
+  <path d="M0 268C110 248 222 252 320 272V320H0V268Z" fill="#89A36B"/>
+  <!-- Hair back -->
+  <circle cx="160" cy="150" r="56" fill="#4A2E20"/>
+  <!-- Shoulders & apron -->
+  <path d="M74 320C82 248 118 224 160 224C202 224 238 248 246 320H74Z" fill="#71864F"/>
+  <path d="M114 232H206V320H114V232Z" fill="#F6F5ED"/>
+  <path d="M138 232V256M182 232V256" stroke="#244D36" stroke-width="5" stroke-linecap="round"/>
+  <!-- Neck & face -->
+  <rect x="142" y="190" width="36" height="36" rx="14" fill="#DDA684"/>
+  <circle cx="160" cy="154" r="44" fill="#E8B291"/>
+  <path d="M116 146C124 112 196 112 204 146C188 128 132 128 116 146Z" fill="#4A2E20"/>
+  <circle cx="145" cy="154" r="4" fill="#2A241E"/>
+  <circle cx="175" cy="154" r="4" fill="#2A241E"/>
+  <path d="M148 172C154 178 166 178 172 172" stroke="#854834" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Strawberry badge -->
+  <circle cx="252" cy="76" r="30" fill="#FFFFFF" stroke="#DCE6D2" stroke-width="2"/>
+  <path d="M252 60C264 60 270 70 266 84C262 94 256 98 252 98C248 98 242 94 238 84C234 70 240 60 252 60Z" fill="#DF3D34"/>
+  <path d="M244 60L252 52L260 60Z" fill="#3D6E35"/>
+</svg>

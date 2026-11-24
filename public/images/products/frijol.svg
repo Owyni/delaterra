@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#F3EDE7"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="112" ry="14" fill="#6D432E" opacity="0.12"/>
+  <!-- Rustic linen sack -->
+  <path d="M118 118C104 166 110 226 144 234H256C290 226 296 166 282 118Z" fill="#D9C8AE"/>
+  <path d="M118 118C136 106 264 106 282 118C270 132 130 132 118 118Z" fill="#C4B091"/>
+  <ellipse cx="200" cy="114" rx="74" ry="20" fill="#9E8769"/>
+  <!-- Beans piled -->
+  <ellipse cx="152" cy="108" rx="14" ry="9" transform="rotate(-18 152 108)" fill="#8B4A32"/>
+  <ellipse cx="182" cy="100" rx="14" ry="9" transform="rotate(14 182 100)" fill="#A65E40"/>
+  <ellipse cx="214" cy="102" rx="14" ry="9" transform="rotate(-12 214 102)" fill="#7A3C26"/>
+  <ellipse cx="242" cy="110" rx="14" ry="9" transform="rotate(18 242 110)" fill="#9E5639"/>
+  <ellipse cx="168" cy="116" rx="14" ry="9" transform="rotate(8 168 116)" fill="#6E3520"/>
+  <ellipse cx="200" cy="114" rx="15" ry="9" transform="rotate(-6 200 114)" fill="#B36B49"/>
+  <ellipse cx="228" cy="118" rx="13" ry="8" transform="rotate(12 228 118)" fill="#8B4A32"/>
+  <!-- Loose beans in front -->
+  <ellipse cx="144" cy="242" rx="12" ry="7.5" transform="rotate(24 144 242)" fill="#8B4A32"/>
+  <ellipse cx="170" cy="246" rx="12" ry="7.5" transform="rotate(-12 170 246)" fill="#A65E40"/>
+  <ellipse cx="262" cy="240" rx="12" ry="7.5" transform="rotate(-22 262 240)" fill="#7A3C26"/>
+</svg>
