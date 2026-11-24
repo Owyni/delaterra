@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="bananaGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE46B"/>
+      <stop offset="100%" stop-color="#E8B92D"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#FBF5DC"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="115" ry="14" fill="#8C711F" opacity="0.12"/>
+  <!-- Tropical leaf accent -->
+  <path d="M88 124C98 76 144 58 178 72C156 108 118 126 88 124Z" fill="#5D8C46"/>
+  <!-- Back banana -->
+  <path d="M126 88C118 142 152 198 228 214C254 218 278 212 290 202C242 204 176 164 152 84Z" fill="#DFB02A"/>
+  <!-- Middle banana -->
+  <path d="M150 76C144 134 182 194 260 202C286 204 306 196 314 184C266 190 198 152 174 72Z" fill="url(#bananaGrad)"/>
+  <!-- Front banana -->
+  <path d="M174 68C172 126 212 184 286 186C310 186 326 176 332 166C286 172 222 136 198 66Z" fill="#FFEB82"/>
+  <path d="M196 96C208 134 242 162 288 172" stroke="#D19D1D" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <!-- Crown stem -->
+  <path d="M122 88L198 64L204 74L128 96Z" fill="#6F7A33"/>
+  <rect x="148" y="48" width="22" height="32" rx="6" transform="rotate(-14 148 48)" fill="#7E893A"/>
+</svg>

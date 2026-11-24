@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <radialGradient id="limeSkin" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#9BD35A"/>
+      <stop offset="65%" stop-color="#589738"/>
+      <stop offset="100%" stop-color="#356823"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#EEF4DF"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="112" ry="14" fill="#244D36" opacity="0.12"/>
+  <!-- Leaves -->
+  <path d="M168 92C146 58 176 38 202 52C198 78 184 94 168 92Z" fill="#467A39"/>
+  <path d="M204 88C226 60 256 64 260 88C238 102 216 98 204 88Z" fill="#71864F"/>
+  <!-- Back lime -->
+  <ellipse cx="144" cy="162" rx="54" ry="48" transform="rotate(-16 144 162)" fill="url(#limeSkin)"/>
+  <ellipse cx="128" cy="142" rx="14" ry="8" transform="rotate(-24 128 142)" fill="#CCF095" opacity="0.45"/>
+  <!-- Front whole lime -->
+  <ellipse cx="222" cy="138" rx="52" ry="46" transform="rotate(14 222 138)" fill="url(#limeSkin)"/>
+  <ellipse cx="206" cy="120" rx="12" ry="7" transform="rotate(10 206 120)" fill="#CCF095" opacity="0.45"/>
+  <!-- Sliced half lime -->
+  <g transform="translate(174 148)">
+    <circle cx="48" cy="48" r="46" fill="#4E8B32"/>
+    <circle cx="48" cy="48" r="41" fill="#F2FBE1"/>
+    <circle cx="48" cy="48" r="36" fill="#AEDF6A"/>
+    <path d="M48 12V84M12 48H84M22 22L74 74M74 22L22 74" stroke="#F2FBE1" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="48" cy="48" r="5" fill="#F2FBE1"/>
+  </g>
+</svg>

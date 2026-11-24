@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <rect width="320" height="320" rx="28" fill="#F3EFE2"/>
+  <path d="M0 242C94 220 198 218 320 242V320H0V242Z" fill="#DED7BF"/>
+  <path d="M0 270C112 252 220 254 320 270V320H0V270Z" fill="#8D8B55"/>
+  <!-- Shirt -->
+  <path d="M74 320C80 248 118 224 160 224C202 224 240 248 246 320H74Z" fill="#7D5C3E"/>
+  <path d="M134 224L160 256L186 224" fill="#F6F5ED"/>
+  <!-- Head -->
+  <rect x="142" y="190" width="36" height="36" rx="14" fill="#BA7B57"/>
+  <circle cx="160" cy="154" r="45" fill="#C78762"/>
+  <path d="M116 144C118 114 202 114 204 144C186 122 134 122 116 144Z" fill="#544C46"/>
+  <circle cx="145" cy="154" r="4" fill="#2A241E"/>
+  <circle cx="175" cy="154" r="4" fill="#2A241E"/>
+  <path d="M148 172C154 178 166 178 172 172" stroke="#5A3422" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Corn/grain badge -->
+  <circle cx="252" cy="76" r="30" fill="#FFFFFF" stroke="#DCE6D2" stroke-width="2"/>
+  <rect x="242" y="54" width="20" height="40" rx="10" fill="#F2CE63"/>
+  <path d="M242 74C236 86 240 94 252 98C248 88 248 80 242 74Z" fill="#5D8844"/>
+  <path d="M262 74C268 86 264 94 252 98C256 88 256 80 262 74Z" fill="#3D6933"/>
+</svg>

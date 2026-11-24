@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <radialGradient id="berryRed" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#FA6054"/>
+      <stop offset="65%" stop-color="#D9322B"/>
+      <stop offset="100%" stop-color="#9C1D1B"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="300" fill="#FBE9E8"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.7"/>
+  <ellipse cx="200" cy="242" rx="112" ry="14" fill="#7D2420" opacity="0.12"/>
+  <!-- Left strawberry -->
+  <g transform="translate(88 106) rotate(-14)">
+    <path d="M46 14C72 14 88 38 82 68C76 96 58 112 46 112C34 112 16 96 10 68C4 38 20 14 46 14Z" fill="url(#berryRed)"/>
+    <path d="M24 18L46 4L68 18L56 26L46 18L36 26Z" fill="#467A39"/>
+    <circle cx="32" cy="44" r="2.2" fill="#FFE69A"/>
+    <circle cx="58" cy="46" r="2.2" fill="#FFE69A"/>
+    <circle cx="46" cy="60" r="2.2" fill="#FFE69A"/>
+    <circle cx="34" cy="76" r="2.2" fill="#FFE69A"/>
+    <circle cx="56" cy="76" r="2.2" fill="#FFE69A"/>
+    <circle cx="46" cy="92" r="2.2" fill="#FFE69A"/>
+  </g>
+  <!-- Right strawberry -->
+  <g transform="translate(214 102) rotate(14)">
+    <path d="M46 14C72 14 88 38 82 68C76 96 58 112 46 112C34 112 16 96 10 68C4 38 20 14 46 14Z" fill="url(#berryRed)"/>
+    <path d="M24 18L46 4L68 18L56 26L46 18L36 26Z" fill="#467A39"/>
+    <circle cx="34" cy="46" r="2.2" fill="#FFE69A"/>
+    <circle cx="58" cy="44" r="2.2" fill="#FFE69A"/>
+    <circle cx="46" cy="62" r="2.2" fill="#FFE69A"/>
+    <circle cx="36" cy="78" r="2.2" fill="#FFE69A"/>
+    <circle cx="56" cy="78" r="2.2" fill="#FFE69A"/>
+  </g>
+  <!-- Center hero strawberry -->
+  <g transform="translate(144 74)">
+    <path d="M56 18C88 18 108 46 100 84C92 118 70 138 56 138C42 138 20 118 12 84C4 46 24 18 56 18Z" fill="url(#berryRed)"/>
+    <ellipse cx="38" cy="54" rx="9" ry="18" transform="rotate(-16 38 54)" fill="#FF988E" opacity="0.4"/>
+    <path d="M28 22L56 4L84 22L68 32L56 22L44 32Z" fill="#3B6D34"/>
+    <path d="M56 4V-8" stroke="#3B6D34" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="38" cy="52" r="2.5" fill="#FFE89C"/>
+    <circle cx="56" cy="48" r="2.5" fill="#FFE89C"/>
+    <circle cx="74" cy="54" r="2.5" fill="#FFE89C"/>
+    <circle cx="46" cy="72" r="2.5" fill="#FFE89C"/>
+    <circle cx="66" cy="72" r="2.5" fill="#FFE89C"/>
+    <circle cx="34" cy="86" r="2.5" fill="#FFE89C"/>
+    <circle cx="56" cy="92" r="2.5" fill="#FFE89C"/>
+    <circle cx="76" cy="88" r="2.5" fill="#FFE89C"/>
+    <circle cx="48" cy="112" r="2.5" fill="#FFE89C"/>
+    <circle cx="64" cy="112" r="2.5" fill="#FFE89C"/>
+  </g>
+</svg>

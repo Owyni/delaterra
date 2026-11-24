@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="cucGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5B9B47"/>
+      <stop offset="60%" stop-color="#356C31"/>
+      <stop offset="100%" stop-color="#224C22"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#E8F2E4"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="240" rx="120" ry="14" fill="#244D36" opacity="0.12"/>
+  <!-- Back cucumber -->
+  <rect x="86" y="104" width="212" height="50" rx="25" transform="rotate(-14 86 104)" fill="url(#cucGrad)"/>
+  <path d="M108 118L268 79" stroke="#85BD68" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+  <!-- Front cucumber -->
+  <rect x="82" y="144" width="224" height="54" rx="27" transform="rotate(-4 82 144)" fill="url(#cucGrad)"/>
+  <path d="M104 160L280 148" stroke="#85BD68" stroke-width="4.5" stroke-linecap="round" opacity="0.5"/>
+  <!-- Crisp slices -->
+  <g transform="translate(226 164)">
+    <circle cx="40" cy="40" r="38" fill="#2E642C"/>
+    <circle cx="40" cy="40" r="32" fill="#E2F2CA"/>
+    <circle cx="40" cy="40" r="20" fill="#CBE7A8"/>
+    <ellipse cx="32" cy="36" rx="2.2" ry="4" transform="rotate(-25 32 36)" fill="#FFFCEE"/>
+    <ellipse cx="48" cy="36" rx="2.2" ry="4" transform="rotate(25 48 36)" fill="#FFFCEE"/>
+    <ellipse cx="40" cy="48" rx="2.2" ry="4" fill="#FFFCEE"/>
+  </g>
+</svg>

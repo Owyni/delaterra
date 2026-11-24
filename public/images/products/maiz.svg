@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="whiteCorn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFCEB"/>
+      <stop offset="55%" stop-color="#F6E6AC"/>
+      <stop offset="100%" stop-color="#DFC472"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#F7F3E3"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="112" ry="14" fill="#6E652B" opacity="0.12"/>
+  <!-- Corn cob 1 -->
+  <g transform="translate(132 58) rotate(-14)">
+    <rect x="14" y="6" width="58" height="160" rx="29" fill="url(#whiteCorn)" stroke="#DFC882" stroke-width="2"/>
+    <path d="M24 32H62M20 52H66M20 72H66M20 92H66M22 112H64M24 132H62" stroke="#D1B25E" stroke-width="3" stroke-dasharray="5 6" stroke-linecap="round"/>
+    <!-- Husk leaves -->
+    <path d="M12 78C-12 116 -4 166 42 184C28 150 28 112 12 78Z" fill="#5D8844"/>
+    <path d="M74 74C98 112 90 166 44 184C58 150 58 110 74 74Z" fill="#3C6A34"/>
+  </g>
+  <!-- Corn cob 2 -->
+  <g transform="translate(208 82) rotate(18)">
+    <rect x="12" y="6" width="52" height="142" rx="26" fill="url(#whiteCorn)" stroke="#DFC882" stroke-width="2"/>
+    <path d="M20 30H54M18 48H56M18 66H56M18 84H56M20 102H54" stroke="#D1B25E" stroke-width="3" stroke-dasharray="5 6" stroke-linecap="round"/>
+    <path d="M10 70C-10 104 -4 148 38 164C26 134 26 100 10 70Z" fill="#6E9950"/>
+    <path d="M66 68C86 102 80 148 38 164C50 134 50 98 66 68Z" fill="#48773B"/>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" fill="none">
+  <rect width="320" height="220" rx="24" fill="#EBEFE4"/>
+  <circle cx="160" cy="112" r="78" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="160" cy="176" rx="84" ry="12" fill="#244D36" opacity="0.1"/>
+  <!-- Corn cob -->
+  <g transform="translate(136 52) rotate(12)">
+    <rect x="6" y="4" width="44" height="108" rx="22" fill="#F5CE5E"/>
+    <path d="M12 24H44M10 40H46M10 56H46M12 72H44" stroke="#D19D2B" stroke-width="2.5" stroke-dasharray="4 5" stroke-linecap="round"/>
+    <path d="M6 52C-10 78 -4 110 28 122C18 98 18 74 6 52Z" fill="#5D8744"/>
+    <path d="M50 50C66 76 60 110 28 122C38 98 38 72 50 50Z" fill="#3D6933"/>
+  </g>
+  <!-- Wheat / grain stalk -->
+  <path d="M98 166C100 132 108 104 116 84" stroke="#9E8242" stroke-width="3" stroke-linecap="round"/>
+  <ellipse cx="106" cy="108" rx="6" ry="11" transform="rotate(-28 106 108)" fill="#D9B664"/>
+  <ellipse cx="118" cy="102" rx="6" ry="11" transform="rotate(24 118 102)" fill="#E6C677"/>
+  <ellipse cx="110" cy="90" rx="6" ry="10" transform="rotate(-24 110 90)" fill="#E6C677"/>
+</svg>

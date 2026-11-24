@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <rect width="320" height="320" rx="28" fill="#F8F1E1"/>
+  <circle cx="72" cy="74" r="28" fill="#F9D56E" opacity="0.7"/>
+  <path d="M0 244C90 216 200 220 320 240V320H0V244Z" fill="#DCE6D2"/>
+  <path d="M0 270C120 252 210 254 320 272V320H0V270Z" fill="#71864F"/>
+  <!-- Shirt -->
+  <path d="M74 320C80 248 118 224 160 224C202 224 240 248 246 320H74Z" fill="#336243"/>
+  <path d="M138 224L160 252L182 224" fill="#DCE6D2"/>
+  <!-- Head -->
+  <rect x="142" y="190" width="36" height="36" rx="14" fill="#BE7D56"/>
+  <circle cx="160" cy="154" r="45" fill="#CB8962"/>
+  <circle cx="145" cy="152" r="4" fill="#2A241E"/>
+  <circle cx="175" cy="152" r="4" fill="#2A241E"/>
+  <path d="M144 170C152 178 168 178 176 170" stroke="#5A3422" stroke-width="4" stroke-linecap="round"/>
+  <!-- Cap -->
+  <path d="M116 132C118 100 138 84 160 84C182 84 202 100 204 132H116Z" fill="#244D36"/>
+  <path d="M112 132H224C224 140 208 144 186 144H112V132Z" fill="#183B2B"/>
+  <!-- Citrus badge -->
+  <circle cx="252" cy="76" r="30" fill="#FFFFFF" stroke="#DCE6D2" stroke-width="2"/>
+  <circle cx="252" cy="78" r="18" fill="#639D3E"/>
+  <circle cx="252" cy="78" r="13" fill="#BFE27F"/>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#F6EFE2"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="112" ry="14" fill="#8C6D3B" opacity="0.12"/>
+  <!-- Ceramic bowl -->
+  <path d="M104 134H296C288 192 248 228 200 228C152 228 112 192 104 134Z" fill="#244D36"/>
+  <path d="M114 148H286" stroke="#3D6E4F" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="200" cy="134" rx="96" ry="22" fill="#DCE6D2"/>
+  <!-- Chickpeas mound -->
+  <circle cx="154" cy="126" r="14" fill="#E8C684"/>
+  <circle cx="180" cy="114" r="14" fill="#F2D498"/>
+  <circle cx="208" cy="112" r="15" fill="#E5BE78"/>
+  <circle cx="234" cy="120" r="14" fill="#F0D194"/>
+  <circle cx="254" cy="132" r="13" fill="#DDB670"/>
+  <circle cx="138" cy="136" r="13" fill="#DDB670"/>
+  <circle cx="168" cy="134" r="14" fill="#F4D89E"/>
+  <circle cx="196" cy="130" r="15" fill="#E9C682"/>
+  <circle cx="224" cy="134" r="14" fill="#F2D498"/>
+  <!-- Loose chickpeas -->
+  <circle cx="122" cy="234" r="10" fill="#E8C684"/>
+  <circle cx="144" cy="240" r="10" fill="#DDB670"/>
+  <circle cx="276" cy="236" r="10" fill="#E8C684"/>
+</svg>

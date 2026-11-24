@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" fill="none">
+  <rect width="320" height="220" rx="24" fill="#E6EFE2"/>
+  <circle cx="160" cy="112" r="78" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="160" cy="176" rx="84" ry="12" fill="#244D36" opacity="0.1"/>
+  <!-- Broccoli -->
+  <rect x="194" y="120" width="24" height="44" rx="10" fill="#7DAE58"/>
+  <circle cx="192" cy="102" r="24" fill="#2F6636"/>
+  <circle cx="220" cy="102" r="24" fill="#3B7840"/>
+  <circle cx="206" cy="84" r="26" fill="#468B49"/>
+  <!-- Cucumber / Zucchini -->
+  <rect x="82" y="114" width="84" height="32" rx="16" transform="rotate(-18 82 114)" fill="#3F7A38"/>
+  <path d="M96 120L154 101" stroke="#6FA658" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <!-- Tomato -->
+  <circle cx="146" cy="138" r="34" fill="#DF4430"/>
+  <ellipse cx="134" cy="124" rx="8" ry="4.5" transform="rotate(-24 134 124)" fill="#FFA190" opacity="0.6"/>
+  <path d="M146 102L138 113L146 109L156 113L150 102Z" fill="#386833"/>
+</svg>

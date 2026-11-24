@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="carrotGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF9A3C"/>
+      <stop offset="100%" stop-color="#D95B1A"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#FBEFE3"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="118" ry="14" fill="#9E481A" opacity="0.12"/>
+  <!-- Carrot 1 -->
+  <g transform="translate(148 62) rotate(18)">
+    <path d="M22 44C38 44 46 60 40 84L26 178C24 186 16 186 14 178L4 84C0 60 6 44 22 44Z" fill="url(#carrotGrad)"/>
+    <path d="M12 72H26M14 98H28M16 124H25" stroke="#B84510" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+    <path d="M20 44C12 18 2 10 8 4C16 14 20 26 22 42C22 18 28 2 36 6C32 22 26 32 24 44C34 22 44 16 48 22C38 30 30 38 26 46" stroke="#457A39" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <!-- Carrot 2 -->
+  <g transform="translate(216 86) rotate(32)">
+    <path d="M20 40C34 40 42 54 36 76L24 162C22 169 15 169 13 162L4 76C0 54 6 40 20 40Z" fill="url(#carrotGrad)"/>
+    <path d="M12 68H24M14 92H26" stroke="#B84510" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+    <path d="M18 40C10 18 4 10 10 6C16 16 18 26 20 38C22 16 28 4 34 8C30 22 24 32 22 40" stroke="#568C44" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+</svg>

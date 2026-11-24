@@ -15,6 +15,13 @@
       "when": 1794950843247,
       "tag": "0001_enable-postgis",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794952215020,
+      "tag": "0002_cold_joseph",
+      "breakpoints": true
     }
   ]
 }

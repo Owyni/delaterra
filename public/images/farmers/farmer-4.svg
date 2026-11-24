@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" fill="none">
+  <rect width="320" height="320" rx="28" fill="#EBF2E4"/>
+  <path d="M0 242C94 214 198 220 320 244V320H0V242Z" fill="#CFE0BF"/>
+  <path d="M0 270C112 250 220 256 320 272V320H0V270Z" fill="#5F7E44"/>
+  <!-- Hair -->
+  <circle cx="160" cy="146" r="54" fill="#3B2922"/>
+  <!-- Shirt -->
+  <path d="M76 320C84 248 118 224 160 224C202 224 236 248 244 320H76Z" fill="#244D36"/>
+  <circle cx="160" cy="242" r="22" fill="#DCE6D2" opacity="0.25"/>
+  <!-- Head -->
+  <rect x="142" y="190" width="36" height="36" rx="14" fill="#CF936E"/>
+  <circle cx="160" cy="154" r="44" fill="#DC9F7A"/>
+  <path d="M118 144C128 114 192 114 202 144C186 128 134 128 118 144Z" fill="#3B2922"/>
+  <circle cx="145" cy="154" r="4" fill="#2A241E"/>
+  <circle cx="175" cy="154" r="4" fill="#2A241E"/>
+  <path d="M148 172C154 178 166 178 172 172" stroke="#75412E" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Tomato badge -->
+  <circle cx="252" cy="76" r="30" fill="#FFFFFF" stroke="#DCE6D2" stroke-width="2"/>
+  <circle cx="252" cy="80" r="17" fill="#DF4430"/>
+  <path d="M252 62L246 70L252 67L258 70Z" fill="#386833"/>
+</svg>

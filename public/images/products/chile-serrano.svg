@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <defs>
+    <linearGradient id="serranoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#60A340"/>
+      <stop offset="100%" stop-color="#286327"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="#E9F1E2"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="238" rx="116" ry="14" fill="#244D36" opacity="0.12"/>
+  <!-- Chili 1 -->
+  <g transform="translate(108 82) rotate(12)">
+    <path d="M22 24C40 24 44 58 38 104C34 134 24 156 18 156C12 156 6 128 8 88C10 48 10 24 22 24Z" fill="url(#serranoGrad)"/>
+    <path d="M22 24C22 10 28 2 34 4" stroke="#4D783B" stroke-width="5" stroke-linecap="round"/>
+    <path d="M18 44C16 74 16 102 18 124" stroke="#93CA70" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <!-- Chili 2 -->
+  <g transform="translate(186 72) rotate(-6)">
+    <path d="M24 26C44 26 48 64 42 114C38 148 28 170 20 170C12 170 6 138 8 94C10 52 10 26 24 26Z" fill="url(#serranoGrad)"/>
+    <path d="M24 26C24 10 16 2 10 4" stroke="#4D783B" stroke-width="5" stroke-linecap="round"/>
+    <path d="M20 48C18 82 18 114 20 138" stroke="#93CA70" stroke-width="3.5" stroke-linecap="round" opacity="0.6"/>
+  </g>
+  <!-- Chili 3 horizontal -->
+  <g transform="translate(134 192) rotate(-8)">
+    <path d="M18 18C52 8 118 14 148 24C158 28 158 36 144 38C108 44 46 44 18 36C8 32 8 20 18 18Z" fill="#3D7B32"/>
+    <path d="M14 26C2 24 -4 18 -2 12" stroke="#4D783B" stroke-width="4.5" stroke-linecap="round"/>
+  </g>
+</svg>

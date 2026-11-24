@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#EAF3E2"/>
+  <circle cx="200" cy="148" r="110" fill="#FFFFFF" opacity="0.72"/>
+  <ellipse cx="200" cy="242" rx="112" ry="14" fill="#244D36" opacity="0.12"/>
+  <!-- Outer lettuce leaves -->
+  <path d="M118 164C92 128 112 72 160 72C176 52 224 52 240 72C288 72 308 128 282 164C294 204 256 232 200 232C144 232 106 204 118 164Z" fill="#5D9244"/>
+  <!-- Mid leaves -->
+  <path d="M132 162C116 128 134 84 176 86C192 70 222 72 232 90C268 92 280 134 262 164C266 196 236 220 200 220C164 220 130 194 132 162Z" fill="#81B559"/>
+  <!-- Inner crisp leaves -->
+  <path d="M156 154C146 126 164 98 200 100C236 98 254 126 244 154C244 184 224 202 200 202C176 202 156 184 156 154Z" fill="#AED47B"/>
+  <!-- Leaf veins -->
+  <path d="M200 214V118M200 176L164 148M200 162L236 138" stroke="#E8F4D2" stroke-width="3.5" stroke-linecap="round"/>
+</svg>
