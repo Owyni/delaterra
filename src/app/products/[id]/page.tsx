@@ -16,11 +16,13 @@ export async function generateMetadata({
   params,
 }: ProductDetailPageProps): Promise<Metadata> {
   const { id } = await params;
+
   try {
     const product = await getPublicProductById(id);
     if (!product) {
       return { title: "Producto no encontrado" };
     }
+
     return {
       title: `${product.name} — ${product.municipality}`,
       description: product.description,
@@ -30,10 +32,15 @@ export async function generateMetadata({
   }
 }
 
-async function ProductDetailLoader({ id }: { id: string }) {
+async function ProductDetailContent({
+  params,
+}: ProductDetailPageProps) {
+  // El acceso a params y los datos dinámicos queda dentro del límite Suspense.
+  const { id } = await params;
   await connection();
 
   let product = null;
+
   try {
     product = await getPublicProductById(id);
   } catch {
@@ -62,11 +69,9 @@ async function ProductDetailLoader({ id }: { id: string }) {
   );
 }
 
-export default async function ProductDetailPage({
+export default function ProductDetailPage({
   params,
 }: ProductDetailPageProps) {
-  const { id } = await params;
-
   return (
     <div className="flex min-h-screen flex-col bg-[#f6f5ed]">
       <Navbar />
@@ -78,7 +83,7 @@ export default async function ProductDetailPage({
             </div>
           }
         >
-          <ProductDetailLoader id={id} />
+          <ProductDetailContent params={params} />
         </Suspense>
       </main>
       <Footer />
