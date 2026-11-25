@@ -1,10 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
-  reactCompiler: true,
+  // Configuración conservadora para priorizar builds predecibles.
+  // Se desactivan Cache Components y Partial Prefetching mientras
+  // estabilizamos las rutas dinámicas y la sesión del carrito.
   turbopack: {
     rules: {
       "*.css": {
