@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -5,7 +6,7 @@ import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata: Metadata = {
   title: "Iniciar sesión",
-  description: "Acceso visual a la plataforma académica Delaterra.",
+  description: "Accede a tu cuenta de agricultor o negocio comprador en Delaterra.",
 };
 
 export default function LoginPage() {
@@ -22,7 +23,15 @@ export default function LoginPage() {
           className="pointer-events-none absolute -left-24 bottom-10 size-72 rounded-full bg-[#dce6d2]/50 blur-3xl"
         />
         <div className="relative z-10 flex w-full justify-center">
-          <LoginForm />
+          <Suspense
+            fallback={
+              <div className="w-full max-w-md rounded-[2rem] border border-[#dce3d3] bg-white p-9 text-center text-sm text-[#647364]">
+                Cargando acceso...
+              </div>
+            }
+          >
+            <LoginForm />
+          </Suspense>
         </div>
       </main>
       <Footer />

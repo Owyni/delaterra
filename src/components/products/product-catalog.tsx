@@ -9,47 +9,54 @@ import {
   SortAscending,
   X,
 } from "@phosphor-icons/react";
-import { CATEGORIES } from "@/data/categories";
-import { MUNICIPALITIES } from "@/data/farmers";
-import { PRODUCTS } from "@/data/products";
 import { ProductCard } from "@/components/products/product-card";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
+import type {
+  PublicCategoryDTO,
+  PublicProductDTO,
+} from "@/lib/services/catalog";
 import { cn } from "@/lib/utils";
-import type { CategorySlug } from "@/types";
 
-type SortOption = "relevancia" | "precio_asc" | "precio_desc" | "proximidad";
+type SortOption = "relevancia" | "precio_asc" | "precio_desc" | "recientes";
 
-export function ProductCatalog() {
+interface ProductCatalogProps {
+  products: PublicProductDTO[];
+  categories: PublicCategoryDTO[];
+  municipalities: string[];
+}
+
+export function ProductCatalog({
+  products,
+  categories,
+  municipalities,
+}: ProductCatalogProps) {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q") ?? "";
   const paramCategory = searchParams.get("categoria");
-  const validInitialCategory: CategorySlug | "all" = CATEGORIES.some(
-    (c) => c.slug === paramCategory,
-  )
-    ? (paramCategory as CategorySlug)
+  const validInitialCategory = categories.some((c) => c.slug === paramCategory)
+    ? (paramCategory as string)
     : "all";
 
   const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [selectedCategory, setSelectedCategory] = useState<
-    CategorySlug | "all"
-  >(validInitialCategory);
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(validInitialCategory);
   const [selectedMunicipality, setSelectedMunicipality] = useState("all");
   const [sortBy, setSortBy] = useState<SortOption>("relevancia");
 
   const filteredProducts = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
 
-    const list = PRODUCTS.filter((product) => {
+    const list = products.filter((product) => {
       const matchesCategory =
-        selectedCategory === "all" || product.category === selectedCategory;
+        selectedCategory === "all" || product.categorySlug === selectedCategory;
       const matchesMunicipality =
         selectedMunicipality === "all" ||
         product.municipality === selectedMunicipality;
       const matchesQuery =
         !q ||
         product.name.toLowerCase().includes(q) ||
-        product.categoryLabel.toLowerCase().includes(q) ||
+        product.categoryName.toLowerCase().includes(q) ||
         product.municipality.toLowerCase().includes(q) ||
         product.farmerName.toLowerCase().includes(q);
 
@@ -64,16 +71,19 @@ export function ProductCatalog() {
       case "precio_desc":
         sorted.sort((a, b) => b.priceMxn - a.priceMxn);
         break;
-      case "proximidad":
-        sorted.sort((a, b) => a.distanceKmMock - b.distanceKmMock);
+      case "recientes":
+        sorted.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
         break;
       default:
-        sorted.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
+        sorted.sort((a, b) => b.availableQuantity - a.availableQuantity);
         break;
     }
 
     return sorted;
-  }, [searchQuery, selectedCategory, selectedMunicipality, sortBy]);
+  }, [products, searchQuery, selectedCategory, selectedMunicipality, sortBy]);
 
   const hasActiveFilters =
     searchQuery.trim() !== "" ||
@@ -90,7 +100,6 @@ export function ProductCatalog() {
 
   return (
     <div className="space-y-8">
-      {/* Barra de filtros */}
       <div className="rounded-3xl border border-[#dce3d3] bg-white p-5 shadow-[0_10px_30px_-22px_rgba(24,59,43,0.2)] sm:p-6">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
@@ -121,13 +130,11 @@ export function ProductCatalog() {
             <Select
               id="catalog-category"
               value={selectedCategory}
-              onChange={(e) =>
-                setSelectedCategory(e.target.value as CategorySlug | "all")
-              }
+              onChange={(e) => setSelectedCategory(e.target.value)}
             >
               <option value="all">Todas las categorías</option>
-              {CATEGORIES.map((category) => (
-                <option key={category.slug} value={category.slug}>
+              {categories.map((category) => (
+                <option key={category.id} value={category.slug}>
                   {category.name}
                 </option>
               ))}
@@ -148,7 +155,7 @@ export function ProductCatalog() {
               onChange={(e) => setSelectedMunicipality(e.target.value)}
             >
               <option value="all">Todos los municipios</option>
-              {MUNICIPALITIES.map((municipality) => (
+              {municipalities.map((municipality) => (
                 <option key={municipality} value={municipality}>
                   {municipality}
                 </option>
@@ -162,22 +169,21 @@ export function ProductCatalog() {
               className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-[#475b49]"
             >
               <SortAscending className="size-3.5 text-[#71864f]" />
-              Ordenar (visual)
+              Ordenar por
             </label>
             <Select
               id="catalog-sort"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
             >
-              <option value="relevancia">Destacados primero</option>
-              <option value="precio_asc">Menor precio ilustrativo</option>
-              <option value="precio_desc">Mayor precio ilustrativo</option>
-              <option value="proximidad">Proximidad simulada (km)</option>
+              <option value="relevancia">Mayor disponibilidad</option>
+              <option value="recientes">Más recientes</option>
+              <option value="precio_asc">Menor precio</option>
+              <option value="precio_desc">Mayor precio</option>
             </Select>
           </div>
         </div>
 
-        {/* Chips rápidos de categoría */}
         <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-[#eef2e8] pt-4">
           <button
             type="button"
@@ -191,9 +197,9 @@ export function ProductCatalog() {
           >
             Todas
           </button>
-          {CATEGORIES.map((category) => (
+          {categories.map((category) => (
             <button
-              key={category.slug}
+              key={category.id}
               type="button"
               onClick={() => setSelectedCategory(category.slug)}
               className={cn(
@@ -220,21 +226,16 @@ export function ProductCatalog() {
         </div>
       </div>
 
-      {/* Resumen de resultados */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-sm text-[#617061]">
         <p>
           Mostrando{" "}
           <span className="font-semibold text-[#183b2b]">
             {filteredProducts.length}
           </span>{" "}
-          de {PRODUCTS.length} productos ilustrativos
-        </p>
-        <p className="text-xs text-[#7b8677]">
-          Ordenamiento por proximidad basado en distancias de muestra
+          de {products.length} productos activos
         </p>
       </div>
 
-      {/* Cuadrícula de productos */}
       {filteredProducts.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredProducts.map((product) => (
@@ -244,14 +245,20 @@ export function ProductCatalog() {
       ) : (
         <div className="rounded-3xl border border-dashed border-[#cdd7c3] bg-white/80 px-6 py-14 text-center">
           <p className="text-lg font-semibold text-[#183b2b]">
-            No encontramos productos con esos filtros
+            {products.length === 0
+              ? "Aún no hay productos publicados en el catálogo"
+              : "No encontramos productos con esos filtros"}
           </p>
           <p className="mt-2 text-sm text-[#6d7a6b]">
-            Prueba ajustando el municipio, la categoría o limpiando la búsqueda.
+            {products.length === 0
+              ? "Los agricultores registrados y verificados pueden publicar sus cosechas desde su panel."
+              : "Prueba ajustando el municipio, la categoría o limpiando la búsqueda."}
           </p>
-          <Button onClick={resetFilters} variant="secondary" className="mt-5">
-            Mostrar todos los productos
-          </Button>
+          {hasActiveFilters && (
+            <Button onClick={resetFilters} variant="secondary" className="mt-5">
+              Mostrar todos los productos
+            </Button>
+          )}
         </div>
       )}
     </div>

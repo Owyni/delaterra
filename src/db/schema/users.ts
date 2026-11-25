@@ -1,8 +1,8 @@
-
 import {
   pgTable,
   uuid,
   varchar,
+  text,
   timestamp,
   pgEnum,
   boolean,
@@ -17,14 +17,21 @@ export const userRoleEnum = pgEnum("user_role", [
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
 
+  name: varchar("name", { length: 150 }).default("").notNull(),
+
   email: varchar("email", { length: 255 })
     .notNull()
     .unique(),
 
-  passwordHash: varchar("password_hash", { length: 255 })
-    .notNull(),
+  emailVerified: boolean("email_verified").default(false).notNull(),
 
-  role: userRoleEnum("role").notNull(),
+  image: text("image"),
+
+  // Conservada como nullable por compatibilidad no destructiva con el esquema inicial;
+  // las credenciales activas de contraseña se gestionan en `accounts.password` vía Better Auth.
+  passwordHash: varchar("password_hash", { length: 255 }),
+
+  role: userRoleEnum("role").default("business").notNull(),
 
   active: boolean("active").default(true).notNull(),
 

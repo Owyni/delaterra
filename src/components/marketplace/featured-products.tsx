@@ -3,22 +3,31 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Basket } from "@phosphor-icons/react";
-import { CATEGORIES } from "@/data/categories";
-import { PRODUCTS } from "@/data/products";
 import { ProductCard } from "@/components/products/product-card";
 import { buttonVariants } from "@/components/ui/button";
+import type {
+  PublicCategoryDTO,
+  PublicProductDTO,
+} from "@/lib/services/catalog";
 import { cn } from "@/lib/utils";
-import type { CategorySlug } from "@/types";
 
-export function FeaturedProducts() {
-  const [selectedCategory, setSelectedCategory] = useState<
-    CategorySlug | "all"
-  >("all");
+interface FeaturedProductsProps {
+  products: PublicProductDTO[];
+  categories: PublicCategoryDTO[];
+}
+
+export function FeaturedProducts({
+  products,
+  categories,
+}: FeaturedProductsProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const visibleProducts =
     selectedCategory === "all"
-      ? PRODUCTS
-      : PRODUCTS.filter((product) => product.category === selectedCategory);
+      ? products.slice(0, 8)
+      : products
+          .filter((product) => product.categorySlug === selectedCategory)
+          .slice(0, 8);
 
   return (
     <section className="border-y border-[#e2e7d8] bg-[#fbfbf7]">
@@ -27,15 +36,15 @@ export function FeaturedProducts() {
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[#dce6d2]/80 px-3.5 py-1 text-xs font-semibold text-[#244d36]">
               <Basket className="size-3.5 text-[#71864f]" weight="duotone" />
-              Catálogo ilustrativo de temporada
+              Catálogo de temporada
             </span>
             <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold tracking-tight text-[#183b2b] sm:text-4xl">
               Productos frescos del campo michoacano
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#647364] sm:text-base">
-              Precios, productores y disponibilidad mostrados como referencia
-              visual de demostración. Selecciona cualquier producto para ver su
-              ficha detallada.
+              Oferta publicada directamente por agricultores registrados en
+              Michoacán. Selecciona cualquier producto para ver su ficha y
+              solicitar un pedido.
             </p>
           </div>
 
@@ -51,7 +60,6 @@ export function FeaturedProducts() {
           </Link>
         </div>
 
-        {/* Pestañas rápidas por categoría */}
         <div
           role="tablist"
           aria-label="Filtrar vitrina por categoría"
@@ -69,11 +77,11 @@ export function FeaturedProducts() {
                 : "border border-[#d9e0d0] bg-white text-[#465947] hover:bg-[#dce6d2]/50",
             )}
           >
-            Todos ({PRODUCTS.length})
+            Todos ({products.length})
           </button>
-          {CATEGORIES.map((cat) => {
-            const count = PRODUCTS.filter(
-              (p) => p.category === cat.slug,
+          {categories.map((cat) => {
+            const count = products.filter(
+              (p) => p.categorySlug === cat.slug,
             ).length;
             const active = selectedCategory === cat.slug;
             return (
@@ -96,12 +104,23 @@ export function FeaturedProducts() {
           })}
         </div>
 
-        {/* Cuadrícula principal de productos */}
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {visibleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {visibleProducts.length > 0 ? (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-8 rounded-3xl border border-dashed border-[#cdd7c3] bg-white p-10 text-center">
+            <p className="text-base font-semibold text-[#183b2b]">
+              Aún no hay productos publicados en esta categoría
+            </p>
+            <p className="mt-1 text-sm text-[#647364]">
+              ¿Eres productor de Michoacán? Regístrate como agricultor para
+              publicar tu cosecha.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

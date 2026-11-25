@@ -1,57 +1,64 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import {
   MagnifyingGlass,
   MapPin,
   Plant,
+  User,
   X,
 } from "@phosphor-icons/react";
-import { FARMERS, MUNICIPALITIES } from "@/data/farmers";
-import { PRODUCTS } from "@/data/products";
 import { FarmerCard } from "@/components/farmers/farmer-card";
 import { ProductCard } from "@/components/products/product-card";
 import { Badge } from "@/components/ui/badge";
 import { Input, Select } from "@/components/ui/input";
-import type { Farmer } from "@/types";
+import type { PublicFarmerDTO, PublicProductDTO } from "@/lib/services/catalog";
 
-export function FarmersDirectory() {
+interface FarmersDirectoryProps {
+  farmers: PublicFarmerDTO[];
+  products: PublicProductDTO[];
+  municipalities: string[];
+}
+
+export function FarmersDirectory({
+  farmers,
+  products,
+  municipalities,
+}: FarmersDirectoryProps) {
   const searchParams = useSearchParams();
   const initialFarmerId = searchParams.get("productor");
   const initialFarmer =
-    FARMERS.find((f) => f.id === initialFarmerId) ?? null;
+    farmers.find((f) => f.id === initialFarmerId) ?? null;
 
   const [query, setQuery] = useState("");
   const [municipality, setMunicipality] = useState("all");
-  const [activeFarmer, setActiveFarmer] = useState<Farmer | null>(
+  const [activeFarmer, setActiveFarmer] = useState<PublicFarmerDTO | null>(
     initialFarmer,
   );
 
   const filteredFarmers = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return FARMERS.filter((farmer) => {
+    return farmers.filter((farmer) => {
       const matchesMunicipality =
         municipality === "all" || farmer.municipality === municipality;
       const matchesQuery =
         !q ||
-        farmer.name.toLowerCase().includes(q) ||
-        farmer.farmName.toLowerCase().includes(q) ||
-        farmer.specialty.toLowerCase().includes(q) ||
+        farmer.displayName.toLowerCase().includes(q) ||
+        (farmer.farmName ?? "").toLowerCase().includes(q) ||
+        (farmer.specialty ?? "").toLowerCase().includes(q) ||
         farmer.municipality.toLowerCase().includes(q);
       return matchesMunicipality && matchesQuery;
     });
-  }, [query, municipality]);
+  }, [farmers, query, municipality]);
 
   const activeFarmerProducts = useMemo(() => {
     if (!activeFarmer) return [];
-    return PRODUCTS.filter((product) => product.farmerId === activeFarmer.id);
-  }, [activeFarmer]);
+    return products.filter((product) => product.farmerId === activeFarmer.id);
+  }, [activeFarmer, products]);
 
   return (
     <div className="space-y-8">
-      {/* Filtros */}
       <div className="grid gap-4 rounded-3xl border border-[#dce3d3] bg-white p-5 shadow-[0_10px_30px_-22px_rgba(24,59,43,0.2)] sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr]">
         <div>
           <label
@@ -84,7 +91,7 @@ export function FarmersDirectory() {
             onChange={(e) => setMunicipality(e.target.value)}
           >
             <option value="all">Todos los municipios de Michoacán</option>
-            {MUNICIPALITIES.map((item) => (
+            {municipalities.map((item) => (
               <option key={item} value={item}>
                 {item}
               </option>
@@ -93,7 +100,6 @@ export function FarmersDirectory() {
         </div>
       </div>
 
-      {/* Vista detallada del productor seleccionado */}
       {activeFarmer && (
         <section className="relative rounded-[2rem] border border-[#cad7be] bg-white p-6 shadow-[0_18px_45px_-28px_rgba(24,59,43,0.3)] sm:p-8">
           <button
@@ -106,66 +112,83 @@ export function FarmersDirectory() {
           </button>
 
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
-            <Image
-              src={activeFarmer.image}
-              alt={activeFarmer.name}
-              width={160}
-              height={160}
-              unoptimized
-              className="size-28 rounded-3xl border border-[#e3e8da] object-cover"
-            />
+            <div className="flex size-24 shrink-0 items-center justify-center rounded-3xl border border-[#e3e8da] bg-[#eef4ea] text-[#244d36]">
+              <User className="size-10" weight="duotone" />
+            </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="secondary">{activeFarmer.farmName}</Badge>
-                <Badge variant="outline">{activeFarmer.region}</Badge>
-                <Badge variant="available">Perfil ilustrativo demo</Badge>
+                {activeFarmer.farmName && (
+                  <Badge variant="secondary">{activeFarmer.farmName}</Badge>
+                )}
+                <Badge variant="available">Productor registrado</Badge>
               </div>
               <h2 className="mt-2 font-[family-name:var(--font-fraunces)] text-2xl font-semibold text-[#183b2b]">
-                {activeFarmer.name}
+                {activeFarmer.displayName}
               </h2>
               <p className="mt-1 flex flex-wrap items-center gap-3 text-sm text-[#5d6c5d]">
                 <span className="inline-flex items-center gap-1">
                   <MapPin className="size-4 text-[#71864f]" />
-                  {activeFarmer.municipality}, Michoacán
+                  {activeFarmer.municipality}, {activeFarmer.state}
                 </span>
-                <span className="inline-flex items-center gap-1">
-                  <Plant className="size-4 text-[#71864f]" />
-                  {activeFarmer.specialty}
-                </span>
+                {activeFarmer.specialty && (
+                  <span className="inline-flex items-center gap-1">
+                    <Plant className="size-4 text-[#71864f]" />
+                    {activeFarmer.specialty}
+                  </span>
+                )}
               </p>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#647364]">
-                {activeFarmer.bio}
-              </p>
+              {activeFarmer.description && (
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#647364]">
+                  {activeFarmer.description}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="mt-7 border-t border-[#ebf0e4] pt-6">
             <h3 className="text-base font-semibold text-[#183b2b]">
-              Productos publicados por este productor ({activeFarmerProducts.length})
+              Productos publicados por este productor (
+              {activeFarmerProducts.length})
             </h3>
-            <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {activeFarmerProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            {activeFarmerProducts.length > 0 ? (
+              <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {activeFarmerProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <p className="mt-3 text-sm text-[#647364]">
+                Este productor aún no tiene productos activos publicados.
+              </p>
+            )}
           </div>
         </section>
       )}
 
-      {/* Cuadrícula de productores */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {filteredFarmers.map((farmer) => {
-          const count = PRODUCTS.filter((p) => p.farmerId === farmer.id).length;
-          return (
+      {filteredFarmers.length > 0 ? (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredFarmers.map((farmer) => (
             <FarmerCard
               key={farmer.id}
               farmer={farmer}
-              productCount={count}
               onSelectFarmer={(selected) => setActiveFarmer(selected)}
             />
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-3xl border border-dashed border-[#cdd7c3] bg-white/80 px-6 py-14 text-center">
+          <p className="text-lg font-semibold text-[#183b2b]">
+            {farmers.length === 0
+              ? "Aún no hay agricultores registrados"
+              : "No encontramos agricultores con esos filtros"}
+          </p>
+          <p className="mt-2 text-sm text-[#6d7a6b]">
+            {farmers.length === 0
+              ? "Cuando los productores verifiquen su cuenta aparecerán aquí."
+              : "Intenta ajustar el municipio o la búsqueda."}
+          </p>
+        </div>
+      )}
     </div>
   );
 }

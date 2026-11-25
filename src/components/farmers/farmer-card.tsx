@@ -1,21 +1,18 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MapPin, Plant } from "@phosphor-icons/react/ssr";
+import { ArrowRight, MapPin, Plant, User } from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import type { PublicFarmerDTO } from "@/lib/services/catalog";
 import { cn } from "@/lib/utils";
-import type { Farmer } from "@/types";
 
 interface FarmerCardProps {
-  farmer: Farmer;
-  productCount?: number;
-  onSelectFarmer?: (farmer: Farmer) => void;
+  farmer: PublicFarmerDTO;
+  onSelectFarmer?: (farmer: PublicFarmerDTO) => void;
   className?: string;
 }
 
 export function FarmerCard({
   farmer,
-  productCount,
   onSelectFarmer,
   className,
 }: FarmerCardProps) {
@@ -27,64 +24,56 @@ export function FarmerCard({
       )}
     >
       <div className="flex items-start gap-4">
-        <div className="relative size-20 shrink-0 overflow-hidden rounded-2xl border border-[#e3e8da] bg-[#f6f5ed]">
-          <Image
-            src={farmer.image}
-            alt={`Ilustración representativa de ${farmer.name}`}
-            width={160}
-            height={160}
-            unoptimized
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
+        <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl border border-[#e3e8da] bg-[#f6f5ed] text-[#244d36]">
+          <User className="size-7" weight="duotone" />
         </div>
 
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-1.5">
-            <Badge variant="secondary" className="text-[11px]">
-              {farmer.farmName}
-            </Badge>
-          </div>
-          <h3 className="mt-2 truncate text-lg font-semibold text-[#183b2b]">
-            {farmer.name}
+          {farmer.farmName && (
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Badge variant="secondary" className="text-[11px]">
+                {farmer.farmName}
+              </Badge>
+            </div>
+          )}
+          <h3 className="mt-1.5 truncate text-lg font-semibold text-[#183b2b]">
+            {farmer.displayName}
           </h3>
           <p className="mt-1 flex items-center gap-1.5 text-xs font-medium text-[#6c7969]">
             <MapPin
               className="size-3.5 shrink-0 text-[#71864f]"
               weight="duotone"
             />
-            {farmer.municipality}, Michoacán
+            {farmer.municipality}, {farmer.state}
           </p>
         </div>
       </div>
 
-      <div className="mt-4 rounded-2xl bg-[#f6f5ed] p-3.5">
-        <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#71864f]">
-          <Plant className="size-3.5" weight="duotone" />
-          Especialidad agrícola
-        </p>
-        <p className="mt-1 text-sm font-medium text-[#183b2b]">
-          {farmer.specialty}
-        </p>
-      </div>
+      {farmer.specialty && (
+        <div className="mt-4 rounded-2xl bg-[#f6f5ed] p-3.5">
+          <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-[#71864f]">
+            <Plant className="size-3.5" weight="duotone" />
+            Especialidad agrícola
+          </p>
+          <p className="mt-1 text-sm font-medium text-[#183b2b]">
+            {farmer.specialty}
+          </p>
+        </div>
+      )}
 
-      <p className="mt-3.5 line-clamp-2 text-xs leading-relaxed text-[#677465]">
-        {farmer.bio}
-      </p>
+      {farmer.description && (
+        <p className="mt-3.5 line-clamp-2 text-xs leading-relaxed text-[#677465]">
+          {farmer.description}
+        </p>
+      )}
 
       <div className="mt-4 flex flex-wrap gap-1.5">
-        {farmer.badges.map((badge) => (
-          <span
-            key={badge}
-            className="rounded-full border border-[#dde4d3] bg-white px-2.5 py-0.5 text-[11px] font-medium text-[#4c5e4b]"
-          >
-            {badge}
-          </span>
-        ))}
-        {typeof productCount === "number" && (
-          <span className="rounded-full bg-[#dce6d2]/60 px-2.5 py-0.5 text-[11px] font-medium text-[#244d36]">
-            {productCount} productos demo
-          </span>
-        )}
+        <span className="rounded-full bg-[#dce6d2]/60 px-2.5 py-0.5 text-[11px] font-medium text-[#244d36]">
+          {farmer.activeProductCount}{" "}
+          {farmer.activeProductCount === 1
+            ? "producto activo"
+            : "productos activos"}
+        </span>
       </div>
 
       <div className="mt-auto pt-5">

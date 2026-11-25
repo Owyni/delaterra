@@ -6,7 +6,7 @@ import { RegisterForm } from "@/components/auth/register-form";
 export const metadata: Metadata = {
   title: "Registrarse",
   description:
-    "Registro visual de agricultor o negocio comprador en Delaterra.",
+    "Crea tu cuenta real de agricultor o negocio comprador en Delaterra.",
 };
 
 export default function RegisterPage() {

@@ -22,6 +22,13 @@
       "when": 1794952215020,
       "tag": "0002_cold_joseph",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795639772606,
+      "tag": "0003_auth_catalog_orders",
+      "breakpoints": true
     }
   ]
 }

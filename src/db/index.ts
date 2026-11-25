@@ -1,14 +1,42 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
+import { Pool } from "@neondatabase/serverless";
+import { drizzle, type NeonDatabase } from "drizzle-orm/neon-serverless";
 
 import * as schema from "./schema";
 
-const connectionString = process.env.DATABASE_URL;
+type DelaterraDb = NeonDatabase<typeof schema>;
 
-if (!connectionString) {
-  throw new Error("DATABASE_URL no está definida");
+const globalForDb = globalThis as unknown as {
+  __delaterraPool?: Pool;
+  __delaterraDb?: DelaterraDb;
+};
+
+export function getDb(): DelaterraDb {
+  if (globalForDb.__delaterraDb) {
+    return globalForDb.__delaterraDb;
+  }
+
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL no está definida");
+  }
+
+  const pool = new Pool({ connectionString });
+  const instance = drizzle({ client: pool, schema });
+
+  if (process.env.NODE_ENV !== "production") {
+    globalForDb.__delaterraPool = pool;
+    globalForDb.__delaterraDb = instance;
+  }
+
+  return instance;
 }
 
-const sql = neon(connectionString);
+export const db: DelaterraDb = new Proxy({} as DelaterraDb, {
+  get(_target, prop, receiver) {
+    const instance = getDb();
+    const value = Reflect.get(instance, prop, receiver);
+    return typeof value === "function" ? value.bind(instance) : value;
+  },
+});
 
-export const db = drizzle({ client: sql, schema });
+export type Database = DelaterraDb;

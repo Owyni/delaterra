@@ -3,34 +3,30 @@ import Link from "next/link";
 import { ArrowRight, MapPin, User } from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
+import { formatMxn } from "@/lib/orders/domain";
+import type { PublicProductDTO } from "@/lib/services/catalog";
 import { cn } from "@/lib/utils";
-import type { AvailabilityStatus, Product } from "@/types";
-
-const AVAILABILITY_STYLES: Record<
-  AvailabilityStatus,
-  { variant: "available" | "limited" | "seasonal"; dotClass: string }
-> = {
-  disponible: {
-    variant: "available",
-    dotClass: "bg-[#2e7d47]",
-  },
-  pocas_unidades: {
-    variant: "limited",
-    dotClass: "bg-[#c88a22]",
-  },
-  bajo_pedido: {
-    variant: "seasonal",
-    dotClass: "bg-[#6e5a96]",
-  },
-};
 
 interface ProductCardProps {
-  product: Product;
+  product: PublicProductDTO;
   className?: string;
 }
 
 export function ProductCard({ product, className }: ProductCardProps) {
-  const statusStyle = AVAILABILITY_STYLES[product.availability];
+  const isOutOfStock = product.availableQuantity <= 0;
+  const isLowStock = !isOutOfStock && product.availableQuantity <= 10;
+
+  const badgeVariant = isOutOfStock || isLowStock ? "limited" : "available";
+  const dotClass = isOutOfStock
+    ? "bg-[#b84435]"
+    : isLowStock
+      ? "bg-[#c88a22]"
+      : "bg-[#2e7d47]";
+  const availabilityLabel = isOutOfStock
+    ? "Sin existencias"
+    : isLowStock
+      ? `Quedan ${product.availableQuantity}`
+      : `Disponible (${product.availableQuantity})`;
 
   return (
     <article
@@ -39,15 +35,14 @@ export function ProductCard({ product, className }: ProductCardProps) {
         className,
       )}
     >
-      {/* Mitad superior: imagen/ilustración sobre fondo claro */}
       <Link
         href={`/products/${product.id}`}
         className="relative block aspect-[4/3] w-full overflow-hidden border-b border-[#edf1e6]"
         style={{ backgroundColor: product.backdropColor }}
       >
         <Image
-          src={product.image}
-          alt={`${product.name} — ilustración agrícola`}
+          src={product.imageUrl}
+          alt={product.name}
           width={400}
           height={300}
           unoptimized
@@ -55,47 +50,46 @@ export function ProductCard({ product, className }: ProductCardProps) {
         />
         <div className="absolute left-3.5 top-3.5 flex flex-wrap items-center gap-1.5">
           <span className="rounded-full bg-white/92 px-3 py-1 text-[11px] font-semibold tracking-wide text-[#244d36] shadow-2xs backdrop-blur-xs">
-            {product.categoryLabel}
+            {product.categoryName}
           </span>
         </div>
         <div className="absolute right-3.5 top-3.5">
           <Badge
-            variant={statusStyle.variant}
+            variant={badgeVariant}
             className="bg-white/92 backdrop-blur-xs"
           >
             <span
-              className={cn("size-1.5 rounded-full", statusStyle.dotClass)}
+              className={cn("size-1.5 rounded-full", dotClass)}
               aria-hidden="true"
             />
-            {product.availabilityLabel}
+            {availabilityLabel}
           </Badge>
         </div>
       </Link>
 
-      {/* Mitad inferior: jerarquía de precio, origen y acción */}
       <div className="flex flex-1 flex-col justify-between p-5">
         <div>
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="text-lg font-semibold leading-snug tracking-tight text-[#183b2b]">
-              <Link
-                href={`/products/${product.id}`}
-                className="transition-colors hover:text-[#244d36]"
-              >
-                {product.name}
-              </Link>
-            </h3>
-          </div>
+          <h3 className="text-lg font-semibold leading-snug tracking-tight text-[#183b2b]">
+            <Link
+              href={`/products/${product.id}`}
+              className="transition-colors hover:text-[#244d36]"
+            >
+              {product.name}
+            </Link>
+          </h3>
 
           <div className="mt-2.5 flex items-baseline gap-1.5">
             <span className="text-2xl font-bold tracking-tight text-[#244d36]">
-              ${product.priceMxn}
+              {formatMxn(product.priceMxn).replace(" MXN", "")}
             </span>
             <span className="text-xs font-medium text-[#7b8677]">
               MXN / {product.unit}
             </span>
-            <span className="ml-auto rounded-full bg-[#f6f5ed] px-2.5 py-0.5 text-[11px] font-medium text-[#647161]">
-              Mín. {product.minOrder}
-            </span>
+            {product.minOrderNote && (
+              <span className="ml-auto truncate rounded-full bg-[#f6f5ed] px-2.5 py-0.5 text-[11px] font-medium text-[#647161]">
+                {product.minOrderNote}
+              </span>
+            )}
           </div>
 
           <div className="mt-4 space-y-1.5 border-t border-[#eff2e9] pt-3.5 text-xs text-[#697666]">
@@ -103,6 +97,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
               <User className="size-3.5 shrink-0 text-[#71864f]" weight="bold" />
               <span className="truncate font-medium text-[#425243]">
                 {product.farmerName}
+                {product.farmName ? ` · ${product.farmName}` : ""}
               </span>
             </p>
             <p className="flex items-center gap-1.5">

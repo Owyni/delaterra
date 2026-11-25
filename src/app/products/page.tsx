@@ -1,14 +1,30 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ProductCatalog } from "@/components/products/product-catalog";
+import { loadPublicCatalogData } from "@/lib/services/public-loader";
 
 export const metadata: Metadata = {
   title: "Catálogo de productos",
   description:
-    "Explora frutas, verduras, hortalizas, legumbres y tubérculos ilustrativos de Michoacán.",
+    "Explora frutas, verduras, hortalizas, legumbres y tubérculos publicados por agricultores de Michoacán.",
 };
+
+async function ProductsCatalogLoader() {
+  await connection();
+  const { products, categories, municipalities } =
+    await loadPublicCatalogData();
+
+  return (
+    <ProductCatalog
+      products={products}
+      categories={categories}
+      municipalities={municipalities}
+    />
+  );
+}
 
 export default function ProductsPage() {
   return (
@@ -17,14 +33,14 @@ export default function ProductsPage() {
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
         <div className="mb-8 max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#71864f]">
-            Marketplace Michoacán · Demostración visual
+            Marketplace Michoacán
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-3xl font-semibold tracking-tight text-[#183b2b] sm:text-4xl">
             Catálogo agrícola completo
           </h1>
           <p className="mt-2 text-sm leading-relaxed text-[#647364] sm:text-base">
-            Filtra por categoría, municipio de origen o precio ilustrativo para
-            descubrir cosechas locales disponibles en la vitrina.
+            Filtra por categoría, municipio de origen o precio para descubrir
+            cosechas locales disponibles directamente del campo.
           </p>
         </div>
 
@@ -35,7 +51,7 @@ export default function ProductsPage() {
             </div>
           }
         >
-          <ProductCatalog />
+          <ProductsCatalogLoader />
         </Suspense>
       </main>
       <Footer />

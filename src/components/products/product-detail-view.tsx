@@ -5,51 +5,110 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
+  Basket,
   CalendarBlank,
   CheckCircle,
   MapPin,
   Package,
-  PhoneCall,
   SealCheck,
+  ShoppingBag,
   User,
+  WarningCircle,
   X,
 } from "@phosphor-icons/react";
+import { createOrdersAction } from "@/app/actions/orders";
+import { useOrderCart } from "@/components/orders/order-cart-provider";
+import { OrderConfirmationCards } from "@/components/orders/order-confirmation-cards";
+import { ProductCard } from "@/components/products/product-card";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/ui/input";
-import { ProductCard } from "@/components/products/product-card";
+import { formatMxn } from "@/lib/orders/domain";
+import type { PublicProductDTO } from "@/lib/services/catalog";
+import type { CreatedOrderSummary } from "@/lib/services/orders";
 import { cn } from "@/lib/utils";
-import type { Farmer, Product } from "@/types";
 
 interface ProductDetailViewProps {
-  product: Product;
-  farmer?: Farmer;
-  relatedProducts: Product[];
+  product: PublicProductDTO & {
+    farmerDescription: string | null;
+    farmerSpecialty: string | null;
+  };
+  relatedProducts: PublicProductDTO[];
+  viewerRole: "farmer" | "business" | "admin" | null;
 }
 
 export function ProductDetailView({
   product,
-  farmer,
   relatedProducts,
+  viewerRole,
 }: ProductDetailViewProps) {
-  const [contactOpen, setContactOpen] = useState(false);
-  const [submittedDemo, setSubmittedDemo] = useState(false);
+  const { addItem } = useOrderCart();
 
-  const badgeVariant =
-    product.availability === "disponible"
-      ? "available"
-      : product.availability === "pocas_unidades"
-        ? "limited"
-        : "seasonal";
+  const [orderOpen, setOrderOpen] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [notes, setNotes] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [orderError, setOrderError] = useState<string | null>(null);
+  const [createdOrders, setCreatedOrders] = useState<
+    CreatedOrderSummary[] | null
+  >(null);
+  const [addedToCartNotice, setAddedToCartNotice] = useState(false);
 
-  function handleDemoSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const isOutOfStock = product.availableQuantity <= 0;
+  const isLowStock = !isOutOfStock && product.availableQuantity <= 10;
+  const badgeVariant = isOutOfStock || isLowStock ? "limited" : "available";
+  const availabilityLabel = isOutOfStock
+    ? "Sin existencias"
+    : isLowStock
+      ? `Quedan ${product.availableQuantity} ${product.unit}`
+      : `Disponible (${product.availableQuantity} ${product.unit})`;
+
+  function handleAddToCart() {
+    if (isOutOfStock) return;
+    addItem(
+      {
+        productId: product.id,
+        name: product.name,
+        priceMxn: product.priceMxn,
+        unit: product.unit,
+        availableQuantity: product.availableQuantity,
+        imageUrl: product.imageUrl,
+        backdropColor: product.backdropColor,
+        farmerId: product.farmerId,
+        farmerName: product.farmerName,
+        municipality: product.municipality,
+      },
+      quantity,
+    );
+    setAddedToCartNotice(true);
+  }
+
+  async function handleDirectOrderSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmittedDemo(true);
+    setSubmitting(true);
+    setOrderError(null);
+
+    try {
+      const result = await createOrdersAction({
+        items: [{ productId: product.id, quantity }],
+        notes: notes.trim() || null,
+      });
+
+      if (!result.ok) {
+        setOrderError(result.error);
+        return;
+      }
+
+      setCreatedOrders(result.data);
+    } catch {
+      setOrderError("No se pudo enviar tu solicitud de pedido.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-10 lg:py-14">
-      {/* Navegación superior */}
       <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#6c796b]">
         <div className="flex items-center gap-2">
           <Link href="/" className="hover:text-[#244d36]">
@@ -72,17 +131,15 @@ export function ProductDetailView({
         </Link>
       </div>
 
-      {/* Ficha principal */}
       <div className="mt-6 grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-        {/* Imagen grande */}
         <div className="overflow-hidden rounded-[2rem] border border-[#dfe6d5] bg-white p-4 shadow-[0_20px_55px_-30px_rgba(24,59,43,0.28)]">
           <div
             className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.5rem]"
             style={{ backgroundColor: product.backdropColor }}
           >
             <Image
-              src={product.image}
-              alt={`Ilustración de ${product.name}`}
+              src={product.imageUrl}
+              alt={product.name}
               width={400}
               height={300}
               priority
@@ -90,7 +147,7 @@ export function ProductDetailView({
               className="h-full w-full object-cover"
             />
             <span className="absolute left-4 top-4 rounded-full bg-white/92 px-3.5 py-1.5 text-xs font-semibold text-[#244d36] shadow-xs">
-              {product.categoryLabel}
+              {product.categoryName}
             </span>
           </div>
 
@@ -106,27 +163,26 @@ export function ProductDetailView({
                 Presentación
               </p>
               <p className="mt-0.5 text-xs font-semibold text-[#183b2b]">
-                {product.minOrder}
+                {product.minOrderNote || `Por ${product.unit}`}
               </p>
             </div>
             <div className="rounded-2xl bg-[#f6f5ed] p-3">
               <p className="text-[11px] font-medium text-[#7b8677]">
-                Distancia aprox.
+                Disponibilidad
               </p>
               <p className="mt-0.5 text-xs font-semibold text-[#183b2b]">
-                {product.distanceKmMock} km (demo)
+                {product.availableQuantity} {product.unit}
               </p>
             </div>
           </div>
         </div>
 
-        {/* Información comercial ilustrativa */}
         <div className="flex flex-col justify-between space-y-6">
           <div>
             <div className="flex flex-wrap items-center gap-2.5">
-              <Badge variant={badgeVariant}>{product.availabilityLabel}</Badge>
+              <Badge variant={badgeVariant}>{availabilityLabel}</Badge>
               <Badge variant="outline" className="text-[#697667]">
-                Datos ilustrativos de demostración
+                Comercio directo Michoacán
               </Badge>
             </div>
 
@@ -136,7 +192,7 @@ export function ProductDetailView({
 
             <div className="mt-4 flex items-baseline gap-2">
               <span className="text-4xl font-bold tracking-tight text-[#244d36]">
-                ${product.priceMxn}
+                {formatMxn(product.priceMxn).replace(" MXN", "")}
               </span>
               <span className="text-base font-medium text-[#7b8677]">
                 MXN / {product.unit}
@@ -147,228 +203,337 @@ export function ProductDetailView({
               {product.description}
             </p>
 
-            {/* Especificaciones */}
-            <dl className="mt-6 grid gap-3 rounded-3xl border border-[#e0e6d6] bg-white p-5 sm:grid-cols-2">
-              <div className="flex items-start gap-3">
-                <CalendarBlank
-                  className="mt-0.5 size-5 shrink-0 text-[#71864f]"
-                  weight="duotone"
-                />
-                <div>
-                  <dt className="text-xs font-medium text-[#7b8677]">
-                    Temporada de corte
-                  </dt>
-                  <dd className="text-sm font-semibold text-[#183b2b]">
-                    {product.harvestSeason}
-                  </dd>
-                </div>
-              </div>
+            {(product.harvestSeason ||
+              product.packaging ||
+              product.qualityGrade) && (
+              <dl className="mt-6 grid gap-3 rounded-3xl border border-[#e0e6d6] bg-white p-5 sm:grid-cols-2">
+                {product.harvestSeason && (
+                  <div className="flex items-start gap-3">
+                    <CalendarBlank
+                      className="mt-0.5 size-5 shrink-0 text-[#71864f]"
+                      weight="duotone"
+                    />
+                    <div>
+                      <dt className="text-xs font-medium text-[#7b8677]">
+                        Temporada de corte
+                      </dt>
+                      <dd className="text-sm font-semibold text-[#183b2b]">
+                        {product.harvestSeason}
+                      </dd>
+                    </div>
+                  </div>
+                )}
 
-              <div className="flex items-start gap-3">
-                <Package
-                  className="mt-0.5 size-5 shrink-0 text-[#71864f]"
-                  weight="duotone"
-                />
-                <div>
-                  <dt className="text-xs font-medium text-[#7b8677]">Empaque</dt>
-                  <dd className="text-sm font-semibold text-[#183b2b]">
-                    {product.packaging}
-                  </dd>
-                </div>
-              </div>
+                {product.packaging && (
+                  <div className="flex items-start gap-3">
+                    <Package
+                      className="mt-0.5 size-5 shrink-0 text-[#71864f]"
+                      weight="duotone"
+                    />
+                    <div>
+                      <dt className="text-xs font-medium text-[#7b8677]">
+                        Empaque
+                      </dt>
+                      <dd className="text-sm font-semibold text-[#183b2b]">
+                        {product.packaging}
+                      </dd>
+                    </div>
+                  </div>
+                )}
 
-              <div className="flex items-start gap-3 sm:col-span-2">
-                <SealCheck
-                  className="mt-0.5 size-5 shrink-0 text-[#71864f]"
-                  weight="duotone"
-                />
-                <div>
-                  <dt className="text-xs font-medium text-[#7b8677]">
-                    Calidad referencial
-                  </dt>
-                  <dd className="text-sm font-semibold text-[#183b2b]">
-                    {product.qualityGrade}
-                  </dd>
-                </div>
-              </div>
-            </dl>
+                {product.qualityGrade && (
+                  <div className="flex items-start gap-3 sm:col-span-2">
+                    <SealCheck
+                      className="mt-0.5 size-5 shrink-0 text-[#71864f]"
+                      weight="duotone"
+                    />
+                    <div>
+                      <dt className="text-xs font-medium text-[#7b8677]">
+                        Calidad
+                      </dt>
+                      <dd className="text-sm font-semibold text-[#183b2b]">
+                        {product.qualityGrade}
+                      </dd>
+                    </div>
+                  </div>
+                )}
+              </dl>
+            )}
 
-            {/* Tarjeta del agricultor */}
             <div className="mt-6 rounded-3xl border border-[#dce4d1] bg-[#eef2e6] p-5">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-3.5">
-                  {farmer ? (
-                    <Image
-                      src={farmer.image}
-                      alt={farmer.name}
-                      width={64}
-                      height={64}
-                      unoptimized
-                      className="size-14 rounded-2xl border border-white object-cover"
-                    />
-                  ) : (
-                    <div className="flex size-14 items-center justify-center rounded-2xl bg-[#dce6d2] text-[#244d36]">
-                      <User className="size-6" />
-                    </div>
-                  )}
+                  <div className="flex size-14 items-center justify-center rounded-2xl bg-[#dce6d2] text-[#244d36]">
+                    <User className="size-6" weight="duotone" />
+                  </div>
 
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-[#71864f]">
-                      Agricultor de muestra
+                      Productor
                     </p>
                     <p className="text-base font-semibold text-[#183b2b]">
                       {product.farmerName}
                     </p>
                     <p className="flex items-center gap-1 text-xs text-[#5d6c5d]">
                       <MapPin className="size-3.5 text-[#71864f]" />
-                      {farmer ? `${farmer.farmName} · ` : ""}
+                      {product.farmName ? `${product.farmName} · ` : ""}
                       {product.municipality}, Michoacán
                     </p>
                   </div>
                 </div>
 
-                {farmer && (
-                  <Link
-                    href={`/farmers?productor=${farmer.id}`}
-                    className={cn(
-                      buttonVariants({ variant: "outline", size: "sm" }),
-                      "border-[#c4d0b8] bg-white text-[#244d36]",
-                    )}
-                  >
-                    Ver perfil
-                  </Link>
-                )}
+                <Link
+                  href={`/farmers?productor=${product.farmerId}`}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "sm" }),
+                    "border-[#c4d0b8] bg-white text-[#244d36]",
+                  )}
+                >
+                  Ver perfil
+                </Link>
               </div>
             </div>
           </div>
 
-          {/* Botones de acción visual */}
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button
-              size="lg"
-              onClick={() => {
-                setSubmittedDemo(false);
-                setContactOpen(true);
-              }}
-              className="flex-1 rounded-2xl"
-            >
-              <PhoneCall className="size-4" weight="duotone" />
-              Solicitar producto / Contactar agricultor
-            </Button>
-            <Link
-              href="/products"
-              className={cn(
-                buttonVariants({ variant: "outline", size: "lg" }),
-                "rounded-2xl border-[#c6d2bb]",
+          {addedToCartNotice && (
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#c8dac0] bg-[#f1f6ee] p-3.5 text-xs text-[#244d36]">
+              <span className="flex items-center gap-2 font-medium">
+                <CheckCircle className="size-4 shrink-0" weight="fill" />
+                Producto agregado a tu lista de pedido.
+              </span>
+              <Link href="/pedido" className="font-semibold underline">
+                Revisar mi pedido
+              </Link>
+            </div>
+          )}
+
+          {viewerRole === "business" ? (
+            <div className="space-y-3">
+              {!isOutOfStock && (
+                <div className="flex items-center gap-3">
+                  <label
+                    htmlFor="detail-qty"
+                    className="text-xs font-semibold text-[#3e5240]"
+                  >
+                    Cantidad ({product.unit}):
+                  </label>
+                  <Input
+                    id="detail-qty"
+                    type="number"
+                    min={1}
+                    max={product.availableQuantity}
+                    value={quantity}
+                    onChange={(e) => {
+                      const val = Number.parseInt(e.target.value, 10);
+                      if (Number.isNaN(val)) {
+                        setQuantity(1);
+                      } else {
+                        setQuantity(
+                          Math.max(
+                            1,
+                            Math.min(product.availableQuantity, val),
+                          ),
+                        );
+                      }
+                    }}
+                    className="w-28"
+                  />
+                  <span className="text-xs text-[#647364]">
+                    Estimado:{" "}
+                    <strong className="text-[#244d36]">
+                      {formatMxn(product.priceMxn * quantity)}
+                    </strong>
+                  </span>
+                </div>
               )}
-            >
-              Seguir explorando
-            </Link>
-          </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button
+                  size="lg"
+                  disabled={isOutOfStock}
+                  onClick={() => {
+                    setCreatedOrders(null);
+                    setOrderError(null);
+                    setOrderOpen(true);
+                  }}
+                  className="flex-1 rounded-2xl"
+                >
+                  <ShoppingBag className="size-4" weight="duotone" />
+                  {isOutOfStock ? "Sin existencias" : "Solicitar pedido ahora"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  disabled={isOutOfStock}
+                  onClick={handleAddToCart}
+                  className="rounded-2xl border-[#c6d2bb]"
+                >
+                  <Basket className="size-4" weight="duotone" />
+                  Agregar al pedido
+                </Button>
+              </div>
+            </div>
+          ) : viewerRole === "farmer" ? (
+            <div className="rounded-2xl border border-[#dce4d2] bg-[#f6f5ed] p-4 text-xs text-[#526452]">
+              Iniciaste sesión con una cuenta de <strong>agricultor</strong>.
+              Solo las cuentas de negocio comprador pueden generar solicitudes
+              de pedido.
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href={`/login?next=${encodeURIComponent(`/products/${product.id}`)}`}
+                className={cn(
+                  buttonVariants({ variant: "default", size: "lg" }),
+                  "flex-1 rounded-2xl",
+                )}
+              >
+                <ShoppingBag className="size-4" weight="duotone" />
+                Inicia sesión como negocio para pedir
+              </Link>
+              <Link
+                href="/register"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "rounded-2xl border-[#c6d2bb]",
+                )}
+              >
+                Registrar negocio
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Modal visual de contacto / solicitud */}
-      {contactOpen && (
+      {/* Modal de pedido directo */}
+      {orderOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-labelledby="demo-contact-title"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#183b2b]/45 p-4 backdrop-blur-xs"
+          aria-labelledby="direct-order-title"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#183b2b]/45 p-4 backdrop-blur-xs"
         >
-          <div className="relative w-full max-w-lg rounded-3xl border border-[#dce3d3] bg-white p-6 shadow-2xl sm:p-7">
+          <div className="relative my-8 w-full max-w-xl rounded-3xl border border-[#dce3d3] bg-white p-6 shadow-2xl sm:p-7">
             <button
               type="button"
               aria-label="Cerrar ventana"
-              onClick={() => setContactOpen(false)}
+              onClick={() => setOrderOpen(false)}
               className="absolute right-4 top-4 inline-flex size-9 items-center justify-center rounded-full text-[#697666] hover:bg-[#f6f5ed]"
             >
               <X className="size-5" />
             </button>
 
-            {submittedDemo ? (
-              <div className="py-4 text-center">
-                <span className="mx-auto flex size-14 items-center justify-center rounded-full bg-[#ebf4e8] text-[#244d36]">
-                  <CheckCircle className="size-8" weight="duotone" />
-                </span>
-                <h2
-                  id="demo-contact-title"
-                  className="mt-4 text-xl font-semibold text-[#183b2b]"
-                >
-                  Vista previa de solicitud visual
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-[#647364]">
-                  Esta es una demostración visual de interfaz. En esta etapa
-                  académica no se envían pedidos ni mensajes reales al productor.
-                </p>
+            {createdOrders ? (
+              <div className="space-y-4">
+                <OrderConfirmationCards orders={createdOrders} />
                 <Button
-                  onClick={() => setContactOpen(false)}
-                  className="mt-6 w-full"
+                  type="button"
+                  variant="outline"
+                  onClick={() => setOrderOpen(false)}
+                  className="w-full"
                 >
-                  Entendido
+                  Cerrar
                 </Button>
               </div>
             ) : (
               <div>
-                <Badge variant="secondary">Demostración visual</Badge>
+                <Badge variant="secondary">Pedido directo</Badge>
                 <h2
-                  id="demo-contact-title"
+                  id="direct-order-title"
                   className="mt-3 text-xl font-semibold text-[#183b2b]"
                 >
-                  Consultar {product.name}
+                  Solicitar {product.name}
                 </h2>
                 <p className="mt-1 text-xs text-[#6d7a6b]">
-                  Simulación de contacto directo con {product.farmerName} (
-                  {product.municipality}). No genera pedidos reales.
+                  Se generará un pedido para{" "}
+                  <strong>{product.farmerName}</strong> ({product.municipality})
+                  y recibirás el enlace directo de WhatsApp para coordinar pago
+                  y entrega.
                 </p>
 
-                <form onSubmit={handleDemoSubmit} className="mt-5 space-y-4">
+                {orderError && (
+                  <div
+                    role="alert"
+                    className="mt-4 flex items-start gap-2 rounded-2xl border border-[#e6c4bf] bg-[#fdf2f0] p-3 text-xs text-[#8f2d21]"
+                  >
+                    <WarningCircle
+                      className="mt-0.5 size-4 shrink-0"
+                      weight="fill"
+                    />
+                    <span>{orderError}</span>
+                  </div>
+                )}
+
+                <form
+                  onSubmit={handleDirectOrderSubmit}
+                  className="mt-5 space-y-4"
+                >
                   <div>
                     <label
-                      htmlFor="demo-business"
+                      htmlFor="modal-qty"
                       className="mb-1.5 block text-xs font-semibold text-[#425543]"
                     >
-                      Nombre de tu negocio
+                      Cantidad ({product.unit}) · Máx.{" "}
+                      {product.availableQuantity}
                     </label>
                     <Input
-                      id="demo-business"
-                      placeholder="Ej. Restaurante La Parcela"
+                      id="modal-qty"
+                      type="number"
+                      min={1}
+                      max={product.availableQuantity}
                       required
+                      value={quantity}
+                      onChange={(e) => {
+                        const val = Number.parseInt(e.target.value, 10);
+                        setQuantity(
+                          Number.isNaN(val)
+                            ? 1
+                            : Math.max(
+                                1,
+                                Math.min(product.availableQuantity, val),
+                              ),
+                        );
+                      }}
                     />
                   </div>
+
                   <div>
                     <label
-                      htmlFor="demo-qty"
+                      htmlFor="modal-notes"
                       className="mb-1.5 block text-xs font-semibold text-[#425543]"
                     >
-                      Volumen aproximado ({product.unit})
-                    </label>
-                    <Input
-                      id="demo-qty"
-                      placeholder={`Ej. ${product.minOrder}`}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="demo-notes"
-                      className="mb-1.5 block text-xs font-semibold text-[#425543]"
-                    >
-                      Mensaje para el agricultor
+                      Notas para el agricultor (opcional)
                     </label>
                     <Textarea
-                      id="demo-notes"
-                      placeholder="Consulta sobre disponibilidad semanal o punto de entrega..."
+                      id="modal-notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder="Horario preferido de entrega, punto de recolección o detalles de empaque..."
                     />
                   </div>
+
+                  <div className="rounded-2xl bg-[#f6f5ed] p-3.5 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#5d6c5d]">Total estimado:</span>
+                      <span className="font-bold text-[#244d36]">
+                        {formatMxn(product.priceMxn * quantity)}
+                      </span>
+                    </div>
+                  </div>
+
                   <div className="flex gap-2.5 pt-2">
-                    <Button type="submit" className="flex-1">
-                      Simular consulta
+                    <Button
+                      type="submit"
+                      disabled={submitting}
+                      className="flex-1"
+                    >
+                      {submitting ? "Creando pedido..." : "Confirmar pedido"}
                     </Button>
                     <Button
                       type="button"
                       variant="outline"
-                      onClick={() => setContactOpen(false)}
+                      onClick={() => setOrderOpen(false)}
                     >
                       Cancelar
                     </Button>
@@ -380,7 +545,6 @@ export function ProductDetailView({
         </div>
       )}
 
-      {/* Productos relacionados */}
       {relatedProducts.length > 0 && (
         <section className="mt-16 border-t border-[#e0e6d6] pt-12">
           <h2 className="font-[family-name:var(--font-fraunces)] text-2xl font-semibold text-[#183b2b]">

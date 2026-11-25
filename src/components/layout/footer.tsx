@@ -20,7 +20,7 @@ export function Footer() {
           </p>
           <div className="inline-flex items-center gap-2 rounded-full border border-[#ced8c3] bg-white/80 px-3.5 py-1.5 text-xs font-medium text-[#244d36]">
             <Plant className="size-4 text-[#71864f]" weight="duotone" />
-            Prototipo visual con datos demostrativos
+            Comercialización agrícola directa en Michoacán
           </div>
         </div>
 
@@ -57,7 +57,7 @@ export function Footer() {
 
         <div>
           <h4 className="text-sm font-semibold tracking-tight text-[#244d36]">
-            Accesos de muestra
+            Tu cuenta
           </h4>
           <ul className="mt-4 space-y-2.5 text-sm text-[#5c6b5c]">
             <li>
@@ -75,7 +75,7 @@ export function Footer() {
                 href="/dashboard"
                 className="transition hover:text-[#244d36]"
               >
-                Panel administrativo (Demo)
+                Panel de gestión
               </Link>
             </li>
           </ul>

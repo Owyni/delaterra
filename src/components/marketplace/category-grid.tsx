@@ -1,9 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/ssr";
-import { CATEGORIES } from "@/data/categories";
+import type { PublicCategoryDTO } from "@/lib/services/catalog";
 
-export function CategoryGrid() {
+interface CategoryGridProps {
+  categories: PublicCategoryDTO[];
+}
+
+export function CategoryGrid({ categories }: CategoryGridProps) {
   return (
     <section
       id="categorias"
@@ -33,7 +37,7 @@ export function CategoryGrid() {
       </div>
 
       <div className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {CATEGORIES.map((category) => (
+        {categories.map((category) => (
           <Link
             key={category.slug}
             href={`/products?categoria=${category.slug}`}
@@ -41,11 +45,11 @@ export function CategoryGrid() {
           >
             <div
               className="relative h-24 w-32 shrink-0 overflow-hidden rounded-2xl border border-[#e7ece0]"
-              style={{ backgroundColor: category.accentBg }}
+              style={{ backgroundColor: category.accentBg || "#EAF1E3" }}
             >
               <Image
-                src={category.image}
-                alt={`Ilustración de ${category.name}`}
+                src={category.imageUrl || "/images/categories/otros.svg"}
+                alt={category.name}
                 width={320}
                 height={220}
                 unoptimized
@@ -60,11 +64,14 @@ export function CategoryGrid() {
                 </h3>
                 <ArrowRight className="size-4 shrink-0 text-[#71864f] transition-transform duration-200 group-hover:translate-x-1" />
               </div>
-              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#6b7869]">
-                {category.description}
-              </p>
+              {category.description && (
+                <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#6b7869]">
+                  {category.description}
+                </p>
+              )}
               <p className="mt-2 inline-block rounded-full bg-[#f6f5ed] px-2.5 py-0.5 text-[11px] font-medium text-[#5c6e58]">
-                {category.productCountLabel}
+                {category.activeProductCount}{" "}
+                {category.activeProductCount === 1 ? "producto" : "productos"}
               </p>
             </div>
           </Link>
